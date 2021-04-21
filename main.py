@@ -1,4 +1,4 @@
-****************************************
+#****************************************
 # Nom ......... : mypy.py
 # Rôle ........ : calculette simple en SLY python avec quelques commandes en français
 # Auteur ...... : Imen L'Hocine
@@ -14,11 +14,11 @@ from sly import Lexer
 from sly import Parser
 
 
-class Lexer(Lexer):
+class MyLexer(Lexer):
     tokens = {NOM, NUM, CHAINE, ECRIS, CONCA, DOUBLE, MOD}
     ignore = '\t '
 
-    literals = {'=', '+', '-', '/', '*'}
+    literals = {'=', '+', '-', '/', '*','^'}
 
     # Define tokens
 
@@ -41,14 +41,14 @@ class Lexer(Lexer):
         self.lineno = t.value.count('\n')
 
 
-class Parser(Parser):
-    tokens = Lexer.tokens
+class MyParser(Parser):
+    tokens = MyLexer.tokens
 
-    # traitement des priorité
+    # traitement des priorités
 
     precedence = (
         ('left', '+', '-'),
-        ('left', '*', '/'),
+        ('left', '*', '/', '^'),
         ('right', 'UMINUS'),
         ('left', 'DOUBLE', 'MOD'),
     )
@@ -93,6 +93,10 @@ class Parser(Parser):
     @_('expr "/" expr')
     def expr(self, p):
         return ('div', p.expr0, p.expr1)
+
+    @_('expr "^" expr')
+    def expr(self, p):
+        return ('paw', p.expr0, p.expr1)
 
     @_('"-" expr %prec UMINUS')
     def expr(self, p):
@@ -167,6 +171,8 @@ class Execute:
             return self.walkTree(node[1])
         elif node[0] == 'conca':
             return (self.walkTree(node[1]))[:-1] + (self.walkTree(node[2]))[1:]
+        elif node[0] == 'paw':
+            return self.walkTree(node[1]) ** self.walkTree(node[2])
 
         elif node[0] == 'dbl':
             if (node[1][0] == 'num'):
@@ -187,8 +193,8 @@ class Execute:
 
 
 if __name__ == '__main__':
-    lexer = Lexer()
-    parser = Parser()
+    lexer = MyLexer()
+    parser = MyParser()
     env = {}
     while True:
         try:
