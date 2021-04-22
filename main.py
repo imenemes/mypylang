@@ -15,7 +15,7 @@ from sly import Parser
 
 
 class MyLexer(Lexer):
-    tokens = {NOM, NUM, CHAINE, ECRIS, CONCA, DOUBLE, MOD}
+    tokens = {NOM, NUM, CHAINE, ECRIS, CONCA, DOUBLE, MOD,FLOAT}
     ignore = '\t '
 
     literals = {'=', '+', '-', '/', '*','^'}
@@ -28,6 +28,12 @@ class MyLexer(Lexer):
     ECRIS = r'ECRIS'
     NOM = r'[a-zA-Z_][a-zA-Z0-9_]*'
     CHAINE = r'\".*?\"'
+
+    # fonction qui detecte un nombre et retourne sa valeur
+    @_(r'([0-9]*\.[0-9]+|[0-9]+\.?)([Ee][+-]?[0-9]+)?')
+    def FLOAT(self, t):
+        t.value = float(t.value)
+        return t
 
     # fonction qui detecte un nombre et retourne sa valeur
     @_(r'\d+')
@@ -126,6 +132,10 @@ class MyParser(Parser):
     def expr(self, p):
         return ('rst', p.expr0, p.expr1)
 
+    @_('FLOAT')
+    def expr(self, p):
+        return ('flt', p.FLOAT)
+
     @_('NUM')
     def expr(self, p):
         return ('num', p.NUM)
@@ -136,13 +146,15 @@ class Execute:
     def __init__(self, tree, env):
         self.env = env
         result = self.walkTree(tree)
-        if result is not None and isinstance(result, int):
+        if result is not None and (isinstance(result, int) or isinstance(result, float)):
             print(result)
         if isinstance(result, str) and result[0] == '"':
             print(result)
 
     def walkTree(self, node):
 
+        if isinstance(node, float):
+            return node
         if isinstance(node, int):
             return node
         if isinstance(node, str):
@@ -152,6 +164,9 @@ class Execute:
             return None
 
         if node[0] == 'num':
+            return node[1]
+
+        if node[0] == 'flt':
             return node[1]
 
         if node[0] == 'str':
@@ -190,6 +205,8 @@ class Execute:
             except LookupError:
                 print("Variable indéfinie '" + node[1] + "'")
                 return 0
+
+        else: print("Ce type n'est pas pris en charge par ce langage ")
 
 
 if __name__ == '__main__':
