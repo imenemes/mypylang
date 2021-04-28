@@ -10,136 +10,10 @@
 # ********************************************************
 
 
-from sly import Lexer
-from sly import Parser
+from myparser import *
+from urllib.request import urlopen
 
-
-class MyLexer(Lexer):
-    tokens = {NOM, NUM, CHAINE, ECRIS, CONCA, DOUBLE, MOD,FLOAT}
-    ignore = '\t '
-
-    literals = {'=', '+', '-', '/', '*','^'}
-
-    # Define tokens
-
-    MOD = r'MOD'
-    DOUBLE = r'DOUBLE'
-    CONCA = r'CONCA'
-    ECRIS = r'ECRIS'
-    NOM = r'[a-zA-Z_][a-zA-Z0-9_]*'
-    CHAINE = r'\".*?\"'
-
-    # fonction qui detecte un nombre et retourne sa valeur
-    @_(r'([0-9]*\.[0-9]+|[0-9]+\.?)([Ee][+-]?[0-9]+)?')
-    def FLOAT(self, t):
-        t.value = float(t.value)
-        return t
-
-    # fonction qui detecte un nombre et retourne sa valeur
-    @_(r'\d+')
-    def NUM(self, t):
-        t.value = int(t.value)
-        return t
-
-    # fonction qui qui traite les sauts de ligne
-    @_(r'\n+')
-    def newline(self, t):
-        self.lineno = t.value.count('\n')
-
-
-class MyParser(Parser):
-    tokens = MyLexer.tokens
-
-    # traitement des priorités
-
-    precedence = (
-        ('left', '+', '-'),
-        ('left', '*', '/', '^'),
-        ('right', 'UMINUS'),
-        ('left', 'DOUBLE', 'MOD'),
-    )
-
-    # fonction d'initialisation
-    def __init__(self):
-        self.env = {}
-
-    # fonction qui traite les espaces en les ignorant
-    @_('')
-    def statement(self, p):
-        pass
-
-    @_('variable')
-    def statement(self, p):
-        return p.variable
-
-    @_('NOM "=" expr')
-    def variable(self, p):
-        return ('variable', p.NOM, p.expr)
-
-    @_('NOM "=" CHAINE')
-    def variable(self, p):
-        return ('variable', p.NOM, p.CHAINE)
-
-    @_('expr')
-    def statement(self, p):
-        return (p.expr)
-
-    @_('expr "+" expr')
-    def expr(self, p):
-        return ('add', p.expr0, p.expr1)
-
-    @_('expr "-" expr')
-    def expr(self, p):
-        return ('sub', p.expr0, p.expr1)
-
-    @_('expr "*" expr')
-    def expr(self, p):
-        return ('mul', p.expr0, p.expr1)
-
-    @_('expr "/" expr')
-    def expr(self, p):
-        return ('div', p.expr0, p.expr1)
-
-    @_('expr "^" expr')
-    def expr(self, p):
-        return ('paw', p.expr0, p.expr1)
-
-    @_('"-" expr %prec UMINUS')
-    def expr(self, p):
-        return p.expr
-
-    @_('NOM')
-    def expr(self, p):
-        return ('var', p.NOM)
-
-    @_('ECRIS CHAINE')
-    def expr(self, p):
-        return ('ecr', p.CHAINE)
-
-    @_('CONCA CHAINE CHAINE')
-    def expr(self, p):
-        return ('conca', p.CHAINE0, p.CHAINE1)
-
-    @_('DOUBLE CHAINE')
-    def expr(self, p):
-        return ('dbl', p.CHAINE)
-
-    @_('DOUBLE expr')
-    def expr(self, p):
-        return ('dbl', p.expr)
-
-    @_('expr MOD  expr')
-    def expr(self, p):
-        return ('rst', p.expr0, p.expr1)
-
-    @_('FLOAT')
-    def expr(self, p):
-        return ('flt', p.FLOAT)
-
-    @_('NUM')
-    def expr(self, p):
-        return ('num', p.NUM)
-
+from bs4 import BeautifulSoup
 
 class Execute:
 
@@ -172,6 +46,30 @@ class Execute:
         if node[0] == 'str':
             return node[1]
 
+        if node[0] == 'if_stmt':
+            result = self.walkTree(node[1])
+            if result:
+                return self.walkTree(node[2][1])
+            return self.walkTree(node[2][2])
+
+        if node[0] == 'condition_eqeq':
+            return self.walkTree(node[1]) == self.walkTree(node[2])
+
+        if node[0] == 'fun_def':
+            self.env[node[1]] = node[2]
+
+        if node[0] == 'fun_call':
+            try:
+                return self.walkTree(self.env[node[1]])
+            except LookupError:
+                print("Undefined function '%s'" % node[1])
+                return 0
+
+        if node[0] == 'SCRP':
+            html = urlopen(self.walkTree(node[1]))
+            res = BeautifulSoup(html.read(), "html5lib")
+            print(res.title)
+
         if node[0] == 'add':
             return self.walkTree(node[1]) + self.walkTree(node[2])
         elif node[0] == 'sub':
@@ -185,12 +83,14 @@ class Execute:
         elif node[0] == 'ecr':
             return self.walkTree(node[1])
         elif node[0] == 'conca':
-            return (self.walkTree(node[1]))[:-1] + (self.walkTree(node[2]))[1:]
+            #return (self.walkTree(node[1]))[:-1] + (self.walkTree(node[2]))[1:]
+            return (self.walkTree(node[1])) + (self.walkTree(node[2]))
+
         elif node[0] == 'paw':
             return self.walkTree(node[1]) ** self.walkTree(node[2])
 
         elif node[0] == 'dbl':
-            if (node[1][0] == 'num'):
+            if (node[1][0] == 'num'or node[1][0] == 'flt' ):
                 return 2 * self.walkTree(node[1])
             else:
                 return (self.walkTree(node[1]))[:-1] + (self.walkTree(node[1]))[1:]
@@ -199,6 +99,10 @@ class Execute:
             self.env[node[1]] = self.walkTree(node[2])
             return node[1]
 
+        elif node[0] == 'tp':
+            print(node[1])
+            print(type(self.walkTree(node[1])))
+
         elif node[0] == 'var':
             try:
                 return self.env[node[1]]
@@ -206,7 +110,24 @@ class Execute:
                 print("Variable indéfinie '" + node[1] + "'")
                 return 0
 
-        else: print("Ce type n'est pas pris en charge par ce langage ")
+        elif node[0] == 'for_loop':
+            if node[1][0] == 'for_loop_setup':
+                loop_setup = self.walkTree(node[1])
+
+                loop_count = self.env[loop_setup[0]]
+                loop_limit = loop_setup[1]
+
+                for i in range(loop_count+1, loop_limit+1):
+                    res = self.walkTree(node[2])
+                    if res is not None:
+                        print(res)
+                    self.env[loop_setup[0]] = i
+                del self.env[loop_setup[0]]
+
+        elif node[0] == 'for_loop_setup':
+            return (self.walkTree(node[1]), self.walkTree(node[2]))
+
+        #else: print("Ce type n'est pas pris en charge par ce langage ")
 
 
 if __name__ == '__main__':
@@ -221,3 +142,5 @@ if __name__ == '__main__':
         if text:
             tree = parser.parse(lexer.tokenize(text))
             Execute(tree, env)
+
+
