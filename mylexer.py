@@ -27,6 +27,7 @@ class MyLexer(Lexer):
     URL = r'https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,}'
     NOM = r'[a-zA-Z_][a-zA-Z0-9_]*'
 
+
     # fonction qui detecte un nombre et retourne sa valeur
     @_(r'([0-9]*\.[1-9]+)([Ee][+-]?[0-9]+)?')
     def FLOAT(self, t):

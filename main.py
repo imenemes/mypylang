@@ -11,8 +11,7 @@
 
 
 from myparser import *
-from urllib.request import urlopen
-
+from urllib.request import *
 from bs4 import BeautifulSoup
 
 class Execute:
@@ -66,9 +65,17 @@ class Execute:
                 return 0
 
         if node[0] == 'SCRP':
-            html = urlopen(self.walkTree(node[1]))
-            res = BeautifulSoup(html.read(), "html5lib")
-            print(res.title)
+            try:
+                html = urlopen(self.walkTree(node[1]))
+            except Exception as e:
+                print(str(e))
+            else:
+                res = BeautifulSoup(html.read(), "lxml")
+                tag = 'res.%s.getText()' %self.walkTree(node[2])[1:-1]
+                if tag is None :
+                    print("Tag not found")
+                else:
+                    print(eval(tag))
 
         if node[0] == 'add':
             return self.walkTree(node[1]) + self.walkTree(node[2])
@@ -83,8 +90,8 @@ class Execute:
         elif node[0] == 'ecr':
             return self.walkTree(node[1])
         elif node[0] == 'conca':
-            #return (self.walkTree(node[1]))[:-1] + (self.walkTree(node[2]))[1:]
-            return (self.walkTree(node[1])) + (self.walkTree(node[2]))
+            return (self.walkTree(node[1]))[:-1] + (self.walkTree(node[2]))[1:]
+
 
         elif node[0] == 'paw':
             return self.walkTree(node[1]) ** self.walkTree(node[2])
@@ -134,13 +141,17 @@ if __name__ == '__main__':
     lexer = MyLexer()
     parser = MyParser()
     env = {}
-    while True:
+    """while True:
         try:
-            text = input('mypy > ')
+            text = input('mypy> ')
         except EOFError:
             break
         if text:
             tree = parser.parse(lexer.tokenize(text))
-            Execute(tree, env)
+            print (tree)
+            Execute(tree, env)"""
+    text = 'SCRAPE https://www.python.org/ "p"'
+    tree = parser.parse(lexer.tokenize(text))
+    Execute(tree, env)
 
 

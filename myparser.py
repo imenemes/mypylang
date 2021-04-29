@@ -8,9 +8,9 @@ class MyParser(Parser):
     # traitement des priorités
 
     precedence = (
-        ('left', 'DOUBLE', 'MOD', 'TYPE', 'CONCA'),
+        ('left', 'DOUBLE', 'TYPE', 'CONCA','SCRAPE'),
         ('left', '+', '-'),
-        ('left', '*', '/', '^'),
+        ('left', '*', '/', '^','MOD'),
         ('right', 'UMINUS'),
 
     )
@@ -23,6 +23,7 @@ class MyParser(Parser):
     def error(self, t):
         print("Illegal character '%s'" % str(t.value))
             # self.index += 1
+
 
     # fonction qui traite les espaces en les ignorant
     @_('')
@@ -41,9 +42,9 @@ class MyParser(Parser):
     def statement(self, p):
         return ('fun_def', p.NOM, p.statement)
 
-    @_('SCRAPE URL')
+    @_('SCRAPE URL CHAINE')
     def statement(self, p):
-        return ('SCRP', p.URL)
+        return ('SCRP', p.URL, p.CHAINE)
 
     @_('NOM "(" ")"')
     def statement(self, p):
@@ -109,9 +110,9 @@ class MyParser(Parser):
     def expr(self, p):
         return ('ecr', p.CHAINE)
 
-    @_('CHAINE CONCA expr')
+    @_('CONCA CHAINE CHAINE')
     def expr(self, p):
-        return ('conca', p.CHAINE, p.expr)
+        return ('conca', p.CHAINE0, p.CHAINE1)
 
     @_('DOUBLE CHAINE')
     def expr(self, p):
