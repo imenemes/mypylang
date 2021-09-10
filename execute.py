@@ -85,20 +85,29 @@ class Execute:
             return self.traverse(node[1]) == self.traverse(node[2])
 
         if node[0] == 'if_stmt':
-            result = self.traverse(node[1])
-            if result:
-                return self.traverse(node[2][1])
-            return self.traverse(node[2][2])
+            result = self.traverse(node[1]) # execute la condition et garde son résultat
+            if result:# le résultat étant un booléen
+                return self.traverse(node[2][1])  # si positif executer le premier block
+            return self.traverse(node[2][2]) # sinon le deuxième
 
         if node[0] == 'fun_def':
-            self.env[node[1]] = node[2]
+            if node[2][0]=='parm':# presence d'un parametre
+                self.env[node[1]] = node[2][2] # stocker la definition de la fonction
+            else:
+                self.env[node[1]] = node[2] # fonction sans paramètres
+
 
         if node[0] == 'fun_call':
-            try:
+            if node[2]: # présence d'un paramètre
+                try:
+                    self.traverse(node[2]) # executer la variable
+                    return self.traverse(self.env[node[1]])
+                except LookupError:
+                    print("la fonction %s est indéfinie" % node[1])
+                    return 0
+            else:
                 return self.traverse(self.env[node[1]])
-            except LookupError:
-                print("la fonction %s est indéfinie" % node[1])
-                return 0
+
 
         if node[0] == 'SCRP':
             try:
@@ -137,7 +146,7 @@ class Execute:
             return (self.traverse(node[1]))[:-1] + (self.traverse(node[2]))[1:]
 
         elif node[0] == 'dbl':
-            if (node[1][0] == 'num'or node[1][0] == 'flt' ):
+            if (node[1][0] == 'num'or node[1][0] == 'flt' or 'var' ):
                 return 2 * self.traverse(node[1])
             else:
                 return (self.traverse(node[1]))[:-1] + (self.traverse(node[1]))[1:]
@@ -162,12 +171,12 @@ class Execute:
                 loop_count = self.env[loop_setup[0]]
                 loop_limit = loop_setup[1]
 
-                for i in range(loop_count+1, loop_limit+1):
+            for i in range(loop_count+1, loop_limit+1):
                     res = self.traverse(node[2])
                     if res is not None:
                         print(res)
                     self.env[loop_setup[0]] = i
-                del self.env[loop_setup[0]]
+            del self.env[loop_setup[0]]
 
         if node[0] == 'for_loop_setup':
             return self.traverse(node[1]), self.traverse(node[2])

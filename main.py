@@ -21,7 +21,7 @@ if __name__ == '__main__':
             try:
                 Execute(tree, env)
             except TypeError as err:
-                raise Error(repr(err))
+                print(repr(err))
 
     """text='si a == 2 alors a= 2*a sinon a= 5'
     tree= parser.parse(lexer.tokenize(text))

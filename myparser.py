@@ -13,9 +13,9 @@ class MyParser(Parser):
 
     precedence = (
         ('nonassoc', '<', 'PE', '>', 'GE','EGL', 'NE','TANTQUE'),
-        ('nonassoc', 'TYPE', 'SCRAPE','CONCA', 'DOUBLE'),
-        ('left', '+', '-', ),
-        ('left', '*', '/', '%','x'),
+        ('nonassoc', 'SCRAPE','CONCA', 'DOUBLE','ECRIS'),
+        ('left', '+', '-',"TYPE"),
+        ('left', '*', '/', '%','x' ),
         ('right', '^'),
         ('right', 'UMINUS')
 
@@ -50,7 +50,7 @@ class MyParser(Parser):
 
     @_('FONC NOM "(" NOM ")" ":" statement')
     def statement(self, p):
-        return 'fun_def', p.NOM1, p.statement
+        return 'fun_def', p.NOM0, ('parm', p.NOM1, p.statement)
 
     @_('SCRAPE URL CHAINE')
     def statement(self, p):
@@ -60,9 +60,9 @@ class MyParser(Parser):
     def statement(self, p):
         return 'fun_call', p.NOM
 
-    @_('NOM "(" NOM ")"')
+    @_('NOM "(" variable ")"')
     def statement(self, p):
-        return 'fun_call', p.NOM0
+        return 'fun_call', p.NOM, p.variable
 
     @_('variable')
     def statement(self, p):
@@ -98,17 +98,17 @@ class MyParser(Parser):
     def variable(self, p):
         return 'variable', p.NOM, p.expr
 
-    @_('NOM "=" CHAINE')
-    def variable(self, p):
-        return 'variable', p.NOM, p.CHAINE
-
-    @_('TYPE CHAINE')
+    @_('DOUBLE expr')
     def expr(self, p):
-        return 'tp', p.CHAINE
+        return 'dbl', p.expr
 
     @_('TYPE expr')
     def expr(self, p):
         return 'tp', p.expr
+
+    @_('CHAINE')
+    def expr(self, p):
+        return 'str', p.CHAINE
 
     # construire l'arbre des opérateurs arithmétiques
     @_('expr "+" expr',
@@ -128,21 +128,13 @@ class MyParser(Parser):
         return -p.expr[1]
 
     # d'autres opérations
-    @_('ECRIS CHAINE')
+    @_('ECRIS expr')
     def expr(self, p):
-        return 'ecr', p.CHAINE
+        return 'ecr', p.expr
 
     @_('CONCA CHAINE CHAINE')
     def expr(self, p):
         return ('conca', p.CHAINE0, p.CHAINE1)
-
-    @_('DOUBLE CHAINE')
-    def expr(self, p):
-        return 'dbl', p.CHAINE
-
-    @_('DOUBLE expr')
-    def expr(self, p):
-        return 'dbl', p.expr
 
     @_('NOM')
     def expr(self, p):
