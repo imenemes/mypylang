@@ -4,15 +4,15 @@ from sly import Lexer
 # définir la classe mylexer
 class MyLexer(Lexer):
     # déclarer une liste de TOKENS
-    tokens = {NOM, NUM, CHAINE, ECRIS, CONCA,
+    tokens = {NOM, NUM, CHAINE, ECRIS, CONCA,TANTQUE,
               DOUBLE, FLOAT, TYPE, SI, ALORS,
               SINON, EGL, FONC, POUR, FLECHE, SCRAPE, URL,PE,GE,NE}
 
     # litéral ingoré
-    ignore = '\t '
+    ignore = '\t\n '
 
     # litéraux d'un caractères
-    literals = {'=', '+', '-', '/', 'x','*', '^', '(', ')', '%', ':', ',', ';'}
+    literals = {'=', '+', '-', '/', 'x','*', '^', '(', ')', '%', ':', ',', ';','>','<'}
 
     # Definir les tokens par des regex
     # l'ordre est important le premier regex qui match sera utilisé
@@ -23,6 +23,10 @@ class MyLexer(Lexer):
     NE = r'!='
     # la definition des identifiants appelés NOM dans ce programme doit être faite après les strings (chaine)
     CHAINE = r'\".*?\"'
+    def CHAINE(self, t):
+        # convertir en un float en python
+        t.value = (t.value)
+        return t
     URL = r'https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,}'
 
     # Règle de base pour l'identification des identifiants
@@ -39,6 +43,8 @@ class MyLexer(Lexer):
     NOM['ecris'] = ECRIS
     NOM['type'] = TYPE
     NOM['double'] = DOUBLE
+    NOM['tantque'] = TANTQUE
+
 
 
 
@@ -75,7 +81,7 @@ class MyLexer(Lexer):
 
     # traitement des erreurs
     def error(self, t):
-        print("caractère non permis '%s'" % str(t.value))
+        print("caractère non permis '%s'" % str(t.value)[0])
         self.index += 1
 
 if __name__ == '__main__':
@@ -87,6 +93,6 @@ if __name__ == '__main__':
         except EOFError:
             break
         if text:
-            lex = lexer.tokenize(text)
-            for token in lex:
-                print(token)
+                lex = lexer.tokenize(text)
+                for token in lex:
+                    print(token)

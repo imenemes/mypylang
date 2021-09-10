@@ -1,6 +1,9 @@
 from sly import Parser
 
-from mylexer import *
+from mylexer import MyLexer
+from mypy_errors import ParseError
+import colorama
+from colorama import Fore,Style
 
 
 class MyParser(Parser):
@@ -9,14 +12,16 @@ class MyParser(Parser):
     # traitement des priorités
 
     precedence = (
-        ('nonassoc', '<', 'PE', '>', 'GE','EGL', 'NE'),
-        ('nonassoc', 'DOUBLE', 'TYPE', 'CONCA', 'SCRAPE'),
-        ('left', '+', '-'),
+        ('nonassoc', '<', 'PE', '>', 'GE','EGL', 'NE','TANTQUE'),
+        ('nonassoc', 'TYPE', 'SCRAPE','CONCA', 'DOUBLE'),
+        ('left', '+', '-', ),
         ('left', '*', '/', '%','x'),
         ('right', '^'),
         ('right', 'UMINUS')
 
     )
+
+    debugfile = 'parser.out'
 
     # fonction d'initialisation
     def __init__(self):
@@ -27,10 +32,6 @@ class MyParser(Parser):
     def statement(self, p):
         pass
 
-    @_('CHAINE')
-    def statement(self, p):
-        return 'str', p.CHAINE
-
     @_('POUR variable FLECHE expr ALORS statement')
     def statement(self, p):
         return 'for_loop', ('for_loop_setup', p.variable, p.expr), p.statement
@@ -39,21 +40,59 @@ class MyParser(Parser):
     def statement(self, p):
         return 'if_stmt', p.condition, ('branch', p.statement0, p.statement1)
 
-    @_('FONC NOM "(" ")" ":" statement')
+    @_('TANTQUE condition ALORS statement')
+    def statement(self, p):
+        return 'while_stmt', p.condition, ('branch', p.statement0)
+
+    @_('FONC NOM "("  ")" ":" statement')
     def statement(self, p):
         return 'fun_def', p.NOM, p.statement
+
+    @_('FONC NOM "(" NOM ")" ":" statement')
+    def statement(self, p):
+        return 'fun_def', p.NOM1, p.statement
 
     @_('SCRAPE URL CHAINE')
     def statement(self, p):
         return 'SCRP', p.URL, p.CHAINE
 
-    @_('NOM "(" ")"')
+    @_('NOM "("  ")"')
     def statement(self, p):
         return 'fun_call', p.NOM
+
+    @_('NOM "(" NOM ")"')
+    def statement(self, p):
+        return 'fun_call', p.NOM0
 
     @_('variable')
     def statement(self, p):
         return p.variable
+
+    @_('expr')
+    def statement(self, p):
+        return p.expr
+
+    @_('"(" variable "," statement ")"')
+    def params(self, p):
+        return p.variable
+
+    @_('"("  ")"')
+    def params(self, p):
+        return
+
+    @_('params')
+    def statement(self, p):
+        return p.params
+
+    @_('expr EGL expr',
+       'expr PE expr',
+       'expr GE expr',
+       'expr NE expr',
+       'expr ">" expr',
+       'expr "<" expr',
+       )
+    def condition(self, p):
+        return p[1], p.expr0, p.expr1
 
     @_('NOM "=" expr')
     def variable(self, p):
@@ -71,10 +110,6 @@ class MyParser(Parser):
     def expr(self, p):
         return 'tp', p.expr
 
-    @_('expr')
-    def statement(self, p):
-        return p.expr
-
     # construire l'arbre des opérateurs arithmétiques
     @_('expr "+" expr',
        'expr "-" expr',
@@ -83,8 +118,6 @@ class MyParser(Parser):
        'expr "/" expr',
        'expr "^" expr',
        'expr "%" expr',
-       'expr ">" expr',
-       'expr "<" expr'
        )
     def expr(self, p):
         return p[1], p.expr0, p.expr1
@@ -94,14 +127,6 @@ class MyParser(Parser):
     def expr(self, p):
         return -p.expr[1]
 
-    @_('expr EGL expr',
-       'expr PE expr',
-       'expr GE expr',
-       'expr NE expr')
-    def condition(self, p):
-        return p[1], p.expr0, p.expr1
-
-
     # d'autres opérations
     @_('ECRIS CHAINE')
     def expr(self, p):
@@ -109,7 +134,7 @@ class MyParser(Parser):
 
     @_('CONCA CHAINE CHAINE')
     def expr(self, p):
-        return 'conca', p.CHAINE0, p.CHAINE1
+        return ('conca', p.CHAINE0, p.CHAINE1)
 
     @_('DOUBLE CHAINE')
     def expr(self, p):
@@ -135,7 +160,12 @@ class MyParser(Parser):
     def expr(self, p):
         return p.expr
 
+    def error(self, p):
+        if p:
+            print(Fore.BLUE + "erreur de syntaxe au token", str(p.value) + Style.RESET_ALL)
 
+        else:
+            print("Syntax error at EOF")
 
 if __name__ == '__main__':
     lexer = MyLexer()
@@ -147,5 +177,9 @@ if __name__ == '__main__':
         except EOFError:
             break
         if text:
-            tree = parser.parse(lexer.tokenize(text))
-            print(tree)
+            try:
+                tree = parser.parse(lexer.tokenize(text))
+                print(tree)
+            except AttributeError as err:
+                print(repr(err))
+                continue

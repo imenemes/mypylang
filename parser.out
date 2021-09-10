@@ -1,134 +1,152 @@
 Grammar:
 
 Rule 0     S' -> statement
-Rule 1     statement -> expr
-Rule 2     statement -> variable
-Rule 3     statement -> NOM ( )
-Rule 4     statement -> SCRAPE URL CHAINE
-Rule 5     statement -> FONC NOM ( ) : statement
-Rule 6     statement -> SI condition ALORS statement SINON statement
-Rule 7     statement -> POUR variable FLECHE expr ALORS statement
-Rule 8     statement -> <empty>
-Rule 9     variable -> NOM = CHAINE
-Rule 10    variable -> NOM = expr
-Rule 11    expr -> FLOAT
-Rule 12    expr -> NUM
-Rule 13    expr -> NOM
-Rule 14    expr -> DOUBLE expr  [precedence=left, level=2]
-Rule 15    expr -> DOUBLE CHAINE
-Rule 16    expr -> CONCA CHAINE CHAINE
-Rule 17    expr -> ECRIS CHAINE
-Rule 18    expr -> - expr  [precedence=right, level=6]
-Rule 19    expr -> expr < expr  [precedence=nonassoc, level=1]
-Rule 20    expr -> expr > expr  [precedence=nonassoc, level=1]
-Rule 21    expr -> expr % expr  [precedence=left, level=4]
-Rule 22    expr -> expr ^ expr  [precedence=right, level=5]
-Rule 23    expr -> expr / expr  [precedence=left, level=4]
-Rule 24    expr -> expr * expr  [precedence=left, level=4]
-Rule 25    expr -> expr x expr  [precedence=left, level=4]
-Rule 26    expr -> expr - expr  [precedence=left, level=3]
-Rule 27    expr -> expr + expr  [precedence=left, level=3]
-Rule 28    expr -> TYPE expr  [precedence=left, level=2]
-Rule 29    expr -> TYPE CHAINE
-Rule 30    condition -> expr NE expr  [precedence=nonassoc, level=1]
-Rule 31    condition -> expr GE expr  [precedence=nonassoc, level=1]
-Rule 32    condition -> expr PE expr  [precedence=nonassoc, level=1]
-Rule 33    condition -> expr EGL expr  [precedence=nonassoc, level=1]
+Rule 1     statement -> params
+Rule 2     statement -> expr
+Rule 3     statement -> variable
+Rule 4     statement -> NOM ( NOM )
+Rule 5     statement -> NOM ( )
+Rule 6     statement -> SCRAPE URL CHAINE
+Rule 7     statement -> FONC NOM ( NOM ) : statement
+Rule 8     statement -> FONC NOM ( ) : statement
+Rule 9     statement -> TANTQUE condition ALORS statement
+Rule 10    statement -> SI condition ALORS statement SINON statement
+Rule 11    statement -> POUR variable FLECHE expr ALORS statement
+Rule 12    statement -> <empty>
+Rule 13    params -> ( )
+Rule 14    params -> ( variable , statement )
+Rule 15    condition -> expr < expr  [precedence=nonassoc, level=1]
+Rule 16    condition -> expr > expr  [precedence=nonassoc, level=1]
+Rule 17    condition -> expr NE expr  [precedence=nonassoc, level=1]
+Rule 18    condition -> expr GE expr  [precedence=nonassoc, level=1]
+Rule 19    condition -> expr PE expr  [precedence=nonassoc, level=1]
+Rule 20    condition -> expr EGL expr  [precedence=nonassoc, level=1]
+Rule 21    variable -> NOM = CHAINE
+Rule 22    variable -> NOM = expr
+Rule 23    expr -> ( expr )
+Rule 24    expr -> FLOAT
+Rule 25    expr -> NUM
+Rule 26    expr -> NOM
+Rule 27    expr -> DOUBLE expr  [precedence=nonassoc, level=2]
+Rule 28    expr -> DOUBLE CHAINE
+Rule 29    expr -> CONCA CHAINE CHAINE
+Rule 30    expr -> ECRIS CHAINE
+Rule 31    expr -> - expr  [precedence=right, level=6]
+Rule 32    expr -> expr % expr  [precedence=left, level=4]
+Rule 33    expr -> expr ^ expr  [precedence=right, level=5]
+Rule 34    expr -> expr / expr  [precedence=left, level=4]
+Rule 35    expr -> expr * expr  [precedence=left, level=4]
+Rule 36    expr -> expr x expr  [precedence=left, level=4]
+Rule 37    expr -> expr - expr  [precedence=left, level=3]
+Rule 38    expr -> expr + expr  [precedence=left, level=3]
+Rule 39    expr -> TYPE expr  [precedence=nonassoc, level=2]
+Rule 40    expr -> TYPE CHAINE
 
 Terminals, with rules where they appear:
 
-%                    : 21
-(                    : 3 5
-)                    : 3 5
-*                    : 24
-+                    : 27
--                    : 18 26
-/                    : 23
-:                    : 5
-<                    : 19
-=                    : 9 10
->                    : 20
-ALORS                : 6 7
-CHAINE               : 4 9 15 16 16 17 29
-CONCA                : 16
-DOUBLE               : 14 15
-ECRIS                : 17
-EGL                  : 33
-FLECHE               : 7
-FLOAT                : 11
-FONC                 : 5
-GE                   : 31
-NE                   : 30
-NOM                  : 3 5 9 10 13
-NUM                  : 12
-PE                   : 32
-POUR                 : 7
-SCRAPE               : 4
-SI                   : 6
-SINON                : 6
-TYPE                 : 28 29
-URL                  : 4
-^                    : 22
+%                    : 32
+(                    : 4 5 7 8 13 14 23
+)                    : 4 5 7 8 13 14 23
+*                    : 35
++                    : 38
+,                    : 14
+-                    : 31 37
+/                    : 34
+:                    : 7 8
+<                    : 15
+=                    : 21 22
+>                    : 16
+ALORS                : 9 10 11
+CHAINE               : 6 21 28 29 29 30 40
+CONCA                : 29
+DOUBLE               : 27 28
+ECRIS                : 30
+EGL                  : 20
+FLECHE               : 11
+FLOAT                : 24
+FONC                 : 7 8
+GE                   : 18
+NE                   : 17
+NOM                  : 4 4 5 7 7 8 21 22 26
+NUM                  : 25
+PE                   : 19
+POUR                 : 11
+SCRAPE               : 6
+SI                   : 10
+SINON                : 10
+TANTQUE              : 9
+TYPE                 : 39 40
+URL                  : 6
+^                    : 33
 error                : 
-x                    : 25
+x                    : 36
 
 Nonterminals, with rules where they appear:
 
-condition            : 6
-expr                 : 1 7 10 14 18 19 19 20 20 21 21 22 22 23 23 24 24 25 25 26 26 27 27 28 30 30 31 31 32 32 33 33
-statement            : 5 6 6 7 0
-variable             : 2 7
+condition            : 9 10
+expr                 : 2 11 15 15 16 16 17 17 18 18 19 19 20 20 22 23 27 31 32 32 33 33 34 34 35 35 36 36 37 37 38 38 39
+params               : 1
+statement            : 7 8 9 10 10 11 14 0
+variable             : 3 11 14
 
 
 state 0
 
     (0) S' -> . statement
-    (1) statement -> . expr
-    (2) statement -> . variable
-    (3) statement -> . NOM ( )
-    (4) statement -> . SCRAPE URL CHAINE
-    (5) statement -> . FONC NOM ( ) : statement
-    (6) statement -> . SI condition ALORS statement SINON statement
-    (7) statement -> . POUR variable FLECHE expr ALORS statement
-    (8) statement -> .
-    (11) expr -> . FLOAT
-    (12) expr -> . NUM
-    (13) expr -> . NOM
-    (14) expr -> . DOUBLE expr
-    (15) expr -> . DOUBLE CHAINE
-    (16) expr -> . CONCA CHAINE CHAINE
-    (17) expr -> . ECRIS CHAINE
-    (18) expr -> . - expr
-    (19) expr -> . expr < expr
-    (20) expr -> . expr > expr
-    (21) expr -> . expr % expr
-    (22) expr -> . expr ^ expr
-    (23) expr -> . expr / expr
-    (24) expr -> . expr * expr
-    (25) expr -> . expr x expr
-    (26) expr -> . expr - expr
-    (27) expr -> . expr + expr
-    (28) expr -> . TYPE expr
-    (29) expr -> . TYPE CHAINE
-    (9) variable -> . NOM = CHAINE
-    (10) variable -> . NOM = expr
-    NOM             shift and go to state 4
-    SCRAPE          shift and go to state 5
-    FONC            shift and go to state 6
-    SI              shift and go to state 7
-    POUR            shift and go to state 8
-    $end            reduce using rule 8 (statement -> .)
-    FLOAT           shift and go to state 9
-    NUM             shift and go to state 10
-    DOUBLE          shift and go to state 11
-    CONCA           shift and go to state 12
-    ECRIS           shift and go to state 13
-    -               shift and go to state 14
-    TYPE            shift and go to state 15
+    (1) statement -> . params
+    (2) statement -> . expr
+    (3) statement -> . variable
+    (4) statement -> . NOM ( NOM )
+    (5) statement -> . NOM ( )
+    (6) statement -> . SCRAPE URL CHAINE
+    (7) statement -> . FONC NOM ( NOM ) : statement
+    (8) statement -> . FONC NOM ( ) : statement
+    (9) statement -> . TANTQUE condition ALORS statement
+    (10) statement -> . SI condition ALORS statement SINON statement
+    (11) statement -> . POUR variable FLECHE expr ALORS statement
+    (12) statement -> .
+    (13) params -> . ( )
+    (14) params -> . ( variable , statement )
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    (21) variable -> . NOM = CHAINE
+    (22) variable -> . NOM = expr
+    NOM             shift and go to state 5
+    SCRAPE          shift and go to state 7
+    FONC            shift and go to state 8
+    TANTQUE         shift and go to state 9
+    SI              shift and go to state 10
+    POUR            shift and go to state 11
+    $end            reduce using rule 12 (statement -> .)
+    (               shift and go to state 6
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
 
     statement                      shift and go to state 1
-    expr                           shift and go to state 2
-    variable                       shift and go to state 3
+    params                         shift and go to state 2
+    expr                           shift and go to state 3
+    variable                       shift and go to state 4
 
 state 1
 
@@ -137,1732 +155,2184 @@ state 1
 
 state 2
 
-    (1) statement -> expr .
-    (19) expr -> expr . < expr
-    (20) expr -> expr . > expr
-    (21) expr -> expr . % expr
-    (22) expr -> expr . ^ expr
-    (23) expr -> expr . / expr
-    (24) expr -> expr . * expr
-    (25) expr -> expr . x expr
-    (26) expr -> expr . - expr
-    (27) expr -> expr . + expr
-    $end            reduce using rule 1 (statement -> expr .)
-    SINON           reduce using rule 1 (statement -> expr .)
-    <               shift and go to state 16
-    >               shift and go to state 17
-    %               shift and go to state 18
-    ^               shift and go to state 19
-    /               shift and go to state 20
-    *               shift and go to state 21
-    x               shift and go to state 22
-    -               shift and go to state 23
-    +               shift and go to state 24
+    (1) statement -> params .
+    $end            reduce using rule 1 (statement -> params .)
+    )               reduce using rule 1 (statement -> params .)
+    SINON           reduce using rule 1 (statement -> params .)
 
 
 state 3
 
-    (2) statement -> variable .
-    $end            reduce using rule 2 (statement -> variable .)
-    SINON           reduce using rule 2 (statement -> variable .)
+    (2) statement -> expr .
+    (32) expr -> expr . % expr
+    (33) expr -> expr . ^ expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . x expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    $end            reduce using rule 2 (statement -> expr .)
+    )               reduce using rule 2 (statement -> expr .)
+    SINON           reduce using rule 2 (statement -> expr .)
+    %               shift and go to state 19
+    ^               shift and go to state 20
+    /               shift and go to state 21
+    *               shift and go to state 22
+    x               shift and go to state 23
+    -               shift and go to state 24
+    +               shift and go to state 25
 
 
 state 4
 
-    (3) statement -> NOM . ( )
-    (13) expr -> NOM .
-    (9) variable -> NOM . = CHAINE
-    (10) variable -> NOM . = expr
-    (               shift and go to state 25
-    <               reduce using rule 13 (expr -> NOM .)
-    >               reduce using rule 13 (expr -> NOM .)
-    %               reduce using rule 13 (expr -> NOM .)
-    ^               reduce using rule 13 (expr -> NOM .)
-    /               reduce using rule 13 (expr -> NOM .)
-    *               reduce using rule 13 (expr -> NOM .)
-    x               reduce using rule 13 (expr -> NOM .)
-    -               reduce using rule 13 (expr -> NOM .)
-    +               reduce using rule 13 (expr -> NOM .)
-    $end            reduce using rule 13 (expr -> NOM .)
-    SINON           reduce using rule 13 (expr -> NOM .)
-    =               shift and go to state 26
+    (3) statement -> variable .
+    $end            reduce using rule 3 (statement -> variable .)
+    )               reduce using rule 3 (statement -> variable .)
+    SINON           reduce using rule 3 (statement -> variable .)
 
 
 state 5
 
-    (4) statement -> SCRAPE . URL CHAINE
-    URL             shift and go to state 27
+    (4) statement -> NOM . ( NOM )
+    (5) statement -> NOM . ( )
+    (26) expr -> NOM .
+    (21) variable -> NOM . = CHAINE
+    (22) variable -> NOM . = expr
+    (               shift and go to state 26
+    %               reduce using rule 26 (expr -> NOM .)
+    ^               reduce using rule 26 (expr -> NOM .)
+    /               reduce using rule 26 (expr -> NOM .)
+    *               reduce using rule 26 (expr -> NOM .)
+    x               reduce using rule 26 (expr -> NOM .)
+    -               reduce using rule 26 (expr -> NOM .)
+    +               reduce using rule 26 (expr -> NOM .)
+    $end            reduce using rule 26 (expr -> NOM .)
+    )               reduce using rule 26 (expr -> NOM .)
+    SINON           reduce using rule 26 (expr -> NOM .)
+    =               shift and go to state 27
 
 
 state 6
 
-    (5) statement -> FONC . NOM ( ) : statement
-    NOM             shift and go to state 28
+    (13) params -> ( . )
+    (14) params -> ( . variable , statement )
+    (23) expr -> ( . expr )
+    (21) variable -> . NOM = CHAINE
+    (22) variable -> . NOM = expr
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    )               shift and go to state 29
+    NOM             shift and go to state 32
+    (               shift and go to state 28
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
 
+    variable                       shift and go to state 30
+    expr                           shift and go to state 31
 
 state 7
 
-    (6) statement -> SI . condition ALORS statement SINON statement
-    (30) condition -> . expr NE expr
-    (31) condition -> . expr GE expr
-    (32) condition -> . expr PE expr
-    (33) condition -> . expr EGL expr
-    (11) expr -> . FLOAT
-    (12) expr -> . NUM
-    (13) expr -> . NOM
-    (14) expr -> . DOUBLE expr
-    (15) expr -> . DOUBLE CHAINE
-    (16) expr -> . CONCA CHAINE CHAINE
-    (17) expr -> . ECRIS CHAINE
-    (18) expr -> . - expr
-    (19) expr -> . expr < expr
-    (20) expr -> . expr > expr
-    (21) expr -> . expr % expr
-    (22) expr -> . expr ^ expr
-    (23) expr -> . expr / expr
-    (24) expr -> . expr * expr
-    (25) expr -> . expr x expr
-    (26) expr -> . expr - expr
-    (27) expr -> . expr + expr
-    (28) expr -> . TYPE expr
-    (29) expr -> . TYPE CHAINE
-    FLOAT           shift and go to state 9
-    NUM             shift and go to state 10
-    NOM             shift and go to state 31
-    DOUBLE          shift and go to state 11
-    CONCA           shift and go to state 12
-    ECRIS           shift and go to state 13
-    -               shift and go to state 14
-    TYPE            shift and go to state 15
+    (6) statement -> SCRAPE . URL CHAINE
+    URL             shift and go to state 33
 
-    condition                      shift and go to state 29
-    expr                           shift and go to state 30
 
 state 8
 
-    (7) statement -> POUR . variable FLECHE expr ALORS statement
-    (9) variable -> . NOM = CHAINE
-    (10) variable -> . NOM = expr
-    NOM             shift and go to state 33
+    (7) statement -> FONC . NOM ( NOM ) : statement
+    (8) statement -> FONC . NOM ( ) : statement
+    NOM             shift and go to state 34
 
-    variable                       shift and go to state 32
 
 state 9
 
-    (11) expr -> FLOAT .
-    <               reduce using rule 11 (expr -> FLOAT .)
-    >               reduce using rule 11 (expr -> FLOAT .)
-    %               reduce using rule 11 (expr -> FLOAT .)
-    ^               reduce using rule 11 (expr -> FLOAT .)
-    /               reduce using rule 11 (expr -> FLOAT .)
-    *               reduce using rule 11 (expr -> FLOAT .)
-    x               reduce using rule 11 (expr -> FLOAT .)
-    -               reduce using rule 11 (expr -> FLOAT .)
-    +               reduce using rule 11 (expr -> FLOAT .)
-    $end            reduce using rule 11 (expr -> FLOAT .)
-    NE              reduce using rule 11 (expr -> FLOAT .)
-    GE              reduce using rule 11 (expr -> FLOAT .)
-    PE              reduce using rule 11 (expr -> FLOAT .)
-    EGL             reduce using rule 11 (expr -> FLOAT .)
-    FLECHE          reduce using rule 11 (expr -> FLOAT .)
-    SINON           reduce using rule 11 (expr -> FLOAT .)
-    ALORS           reduce using rule 11 (expr -> FLOAT .)
+    (9) statement -> TANTQUE . condition ALORS statement
+    (15) condition -> . expr < expr
+    (16) condition -> . expr > expr
+    (17) condition -> . expr NE expr
+    (18) condition -> . expr GE expr
+    (19) condition -> . expr PE expr
+    (20) condition -> . expr EGL expr
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    (               shift and go to state 28
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    NOM             shift and go to state 37
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
 
+    condition                      shift and go to state 35
+    expr                           shift and go to state 36
 
 state 10
 
-    (12) expr -> NUM .
-    <               reduce using rule 12 (expr -> NUM .)
-    >               reduce using rule 12 (expr -> NUM .)
-    %               reduce using rule 12 (expr -> NUM .)
-    ^               reduce using rule 12 (expr -> NUM .)
-    /               reduce using rule 12 (expr -> NUM .)
-    *               reduce using rule 12 (expr -> NUM .)
-    x               reduce using rule 12 (expr -> NUM .)
-    -               reduce using rule 12 (expr -> NUM .)
-    +               reduce using rule 12 (expr -> NUM .)
-    $end            reduce using rule 12 (expr -> NUM .)
-    NE              reduce using rule 12 (expr -> NUM .)
-    GE              reduce using rule 12 (expr -> NUM .)
-    PE              reduce using rule 12 (expr -> NUM .)
-    EGL             reduce using rule 12 (expr -> NUM .)
-    FLECHE          reduce using rule 12 (expr -> NUM .)
-    SINON           reduce using rule 12 (expr -> NUM .)
-    ALORS           reduce using rule 12 (expr -> NUM .)
+    (10) statement -> SI . condition ALORS statement SINON statement
+    (15) condition -> . expr < expr
+    (16) condition -> . expr > expr
+    (17) condition -> . expr NE expr
+    (18) condition -> . expr GE expr
+    (19) condition -> . expr PE expr
+    (20) condition -> . expr EGL expr
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    (               shift and go to state 28
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    NOM             shift and go to state 37
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
 
+    condition                      shift and go to state 38
+    expr                           shift and go to state 36
 
 state 11
 
-    (14) expr -> DOUBLE . expr
-    (15) expr -> DOUBLE . CHAINE
-    (11) expr -> . FLOAT
-    (12) expr -> . NUM
-    (13) expr -> . NOM
-    (14) expr -> . DOUBLE expr
-    (15) expr -> . DOUBLE CHAINE
-    (16) expr -> . CONCA CHAINE CHAINE
-    (17) expr -> . ECRIS CHAINE
-    (18) expr -> . - expr
-    (19) expr -> . expr < expr
-    (20) expr -> . expr > expr
-    (21) expr -> . expr % expr
-    (22) expr -> . expr ^ expr
-    (23) expr -> . expr / expr
-    (24) expr -> . expr * expr
-    (25) expr -> . expr x expr
-    (26) expr -> . expr - expr
-    (27) expr -> . expr + expr
-    (28) expr -> . TYPE expr
-    (29) expr -> . TYPE CHAINE
-    CHAINE          shift and go to state 35
-    FLOAT           shift and go to state 9
-    NUM             shift and go to state 10
-    NOM             shift and go to state 31
-    DOUBLE          shift and go to state 11
-    CONCA           shift and go to state 12
-    ECRIS           shift and go to state 13
-    -               shift and go to state 14
-    TYPE            shift and go to state 15
+    (11) statement -> POUR . variable FLECHE expr ALORS statement
+    (21) variable -> . NOM = CHAINE
+    (22) variable -> . NOM = expr
+    NOM             shift and go to state 40
 
-    expr                           shift and go to state 34
+    variable                       shift and go to state 39
 
 state 12
 
-    (16) expr -> CONCA . CHAINE CHAINE
-    CHAINE          shift and go to state 36
+    (24) expr -> FLOAT .
+    %               reduce using rule 24 (expr -> FLOAT .)
+    ^               reduce using rule 24 (expr -> FLOAT .)
+    /               reduce using rule 24 (expr -> FLOAT .)
+    *               reduce using rule 24 (expr -> FLOAT .)
+    x               reduce using rule 24 (expr -> FLOAT .)
+    -               reduce using rule 24 (expr -> FLOAT .)
+    +               reduce using rule 24 (expr -> FLOAT .)
+    $end            reduce using rule 24 (expr -> FLOAT .)
+    )               reduce using rule 24 (expr -> FLOAT .)
+    <               reduce using rule 24 (expr -> FLOAT .)
+    >               reduce using rule 24 (expr -> FLOAT .)
+    NE              reduce using rule 24 (expr -> FLOAT .)
+    GE              reduce using rule 24 (expr -> FLOAT .)
+    PE              reduce using rule 24 (expr -> FLOAT .)
+    EGL             reduce using rule 24 (expr -> FLOAT .)
+    ,               reduce using rule 24 (expr -> FLOAT .)
+    FLECHE          reduce using rule 24 (expr -> FLOAT .)
+    SINON           reduce using rule 24 (expr -> FLOAT .)
+    ALORS           reduce using rule 24 (expr -> FLOAT .)
 
 
 state 13
 
-    (17) expr -> ECRIS . CHAINE
-    CHAINE          shift and go to state 37
+    (25) expr -> NUM .
+    %               reduce using rule 25 (expr -> NUM .)
+    ^               reduce using rule 25 (expr -> NUM .)
+    /               reduce using rule 25 (expr -> NUM .)
+    *               reduce using rule 25 (expr -> NUM .)
+    x               reduce using rule 25 (expr -> NUM .)
+    -               reduce using rule 25 (expr -> NUM .)
+    +               reduce using rule 25 (expr -> NUM .)
+    $end            reduce using rule 25 (expr -> NUM .)
+    )               reduce using rule 25 (expr -> NUM .)
+    <               reduce using rule 25 (expr -> NUM .)
+    >               reduce using rule 25 (expr -> NUM .)
+    NE              reduce using rule 25 (expr -> NUM .)
+    GE              reduce using rule 25 (expr -> NUM .)
+    PE              reduce using rule 25 (expr -> NUM .)
+    EGL             reduce using rule 25 (expr -> NUM .)
+    ,               reduce using rule 25 (expr -> NUM .)
+    FLECHE          reduce using rule 25 (expr -> NUM .)
+    SINON           reduce using rule 25 (expr -> NUM .)
+    ALORS           reduce using rule 25 (expr -> NUM .)
 
 
 state 14
 
-    (18) expr -> - . expr
-    (11) expr -> . FLOAT
-    (12) expr -> . NUM
-    (13) expr -> . NOM
-    (14) expr -> . DOUBLE expr
-    (15) expr -> . DOUBLE CHAINE
-    (16) expr -> . CONCA CHAINE CHAINE
-    (17) expr -> . ECRIS CHAINE
-    (18) expr -> . - expr
-    (19) expr -> . expr < expr
-    (20) expr -> . expr > expr
-    (21) expr -> . expr % expr
-    (22) expr -> . expr ^ expr
-    (23) expr -> . expr / expr
-    (24) expr -> . expr * expr
-    (25) expr -> . expr x expr
-    (26) expr -> . expr - expr
-    (27) expr -> . expr + expr
-    (28) expr -> . TYPE expr
-    (29) expr -> . TYPE CHAINE
-    FLOAT           shift and go to state 9
-    NUM             shift and go to state 10
-    NOM             shift and go to state 31
-    DOUBLE          shift and go to state 11
-    CONCA           shift and go to state 12
-    ECRIS           shift and go to state 13
-    -               shift and go to state 14
-    TYPE            shift and go to state 15
-
-    expr                           shift and go to state 38
-
-state 15
-
-    (28) expr -> TYPE . expr
-    (29) expr -> TYPE . CHAINE
-    (11) expr -> . FLOAT
-    (12) expr -> . NUM
-    (13) expr -> . NOM
-    (14) expr -> . DOUBLE expr
-    (15) expr -> . DOUBLE CHAINE
-    (16) expr -> . CONCA CHAINE CHAINE
-    (17) expr -> . ECRIS CHAINE
-    (18) expr -> . - expr
-    (19) expr -> . expr < expr
-    (20) expr -> . expr > expr
-    (21) expr -> . expr % expr
-    (22) expr -> . expr ^ expr
-    (23) expr -> . expr / expr
-    (24) expr -> . expr * expr
-    (25) expr -> . expr x expr
-    (26) expr -> . expr - expr
-    (27) expr -> . expr + expr
-    (28) expr -> . TYPE expr
-    (29) expr -> . TYPE CHAINE
-    CHAINE          shift and go to state 40
-    FLOAT           shift and go to state 9
-    NUM             shift and go to state 10
-    NOM             shift and go to state 31
-    DOUBLE          shift and go to state 11
-    CONCA           shift and go to state 12
-    ECRIS           shift and go to state 13
-    -               shift and go to state 14
-    TYPE            shift and go to state 15
-
-    expr                           shift and go to state 39
-
-state 16
-
-    (19) expr -> expr < . expr
-    (11) expr -> . FLOAT
-    (12) expr -> . NUM
-    (13) expr -> . NOM
-    (14) expr -> . DOUBLE expr
-    (15) expr -> . DOUBLE CHAINE
-    (16) expr -> . CONCA CHAINE CHAINE
-    (17) expr -> . ECRIS CHAINE
-    (18) expr -> . - expr
-    (19) expr -> . expr < expr
-    (20) expr -> . expr > expr
-    (21) expr -> . expr % expr
-    (22) expr -> . expr ^ expr
-    (23) expr -> . expr / expr
-    (24) expr -> . expr * expr
-    (25) expr -> . expr x expr
-    (26) expr -> . expr - expr
-    (27) expr -> . expr + expr
-    (28) expr -> . TYPE expr
-    (29) expr -> . TYPE CHAINE
-    FLOAT           shift and go to state 9
-    NUM             shift and go to state 10
-    NOM             shift and go to state 31
-    DOUBLE          shift and go to state 11
-    CONCA           shift and go to state 12
-    ECRIS           shift and go to state 13
-    -               shift and go to state 14
-    TYPE            shift and go to state 15
+    (27) expr -> DOUBLE . expr
+    (28) expr -> DOUBLE . CHAINE
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    CHAINE          shift and go to state 42
+    (               shift and go to state 28
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    NOM             shift and go to state 37
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
 
     expr                           shift and go to state 41
 
+state 15
+
+    (29) expr -> CONCA . CHAINE CHAINE
+    CHAINE          shift and go to state 43
+
+
+state 16
+
+    (30) expr -> ECRIS . CHAINE
+    CHAINE          shift and go to state 44
+
+
 state 17
 
-    (20) expr -> expr > . expr
-    (11) expr -> . FLOAT
-    (12) expr -> . NUM
-    (13) expr -> . NOM
-    (14) expr -> . DOUBLE expr
-    (15) expr -> . DOUBLE CHAINE
-    (16) expr -> . CONCA CHAINE CHAINE
-    (17) expr -> . ECRIS CHAINE
-    (18) expr -> . - expr
-    (19) expr -> . expr < expr
-    (20) expr -> . expr > expr
-    (21) expr -> . expr % expr
-    (22) expr -> . expr ^ expr
-    (23) expr -> . expr / expr
-    (24) expr -> . expr * expr
-    (25) expr -> . expr x expr
-    (26) expr -> . expr - expr
-    (27) expr -> . expr + expr
-    (28) expr -> . TYPE expr
-    (29) expr -> . TYPE CHAINE
-    FLOAT           shift and go to state 9
-    NUM             shift and go to state 10
-    NOM             shift and go to state 31
-    DOUBLE          shift and go to state 11
-    CONCA           shift and go to state 12
-    ECRIS           shift and go to state 13
-    -               shift and go to state 14
-    TYPE            shift and go to state 15
-
-    expr                           shift and go to state 42
-
-state 18
-
-    (21) expr -> expr % . expr
-    (11) expr -> . FLOAT
-    (12) expr -> . NUM
-    (13) expr -> . NOM
-    (14) expr -> . DOUBLE expr
-    (15) expr -> . DOUBLE CHAINE
-    (16) expr -> . CONCA CHAINE CHAINE
-    (17) expr -> . ECRIS CHAINE
-    (18) expr -> . - expr
-    (19) expr -> . expr < expr
-    (20) expr -> . expr > expr
-    (21) expr -> . expr % expr
-    (22) expr -> . expr ^ expr
-    (23) expr -> . expr / expr
-    (24) expr -> . expr * expr
-    (25) expr -> . expr x expr
-    (26) expr -> . expr - expr
-    (27) expr -> . expr + expr
-    (28) expr -> . TYPE expr
-    (29) expr -> . TYPE CHAINE
-    FLOAT           shift and go to state 9
-    NUM             shift and go to state 10
-    NOM             shift and go to state 31
-    DOUBLE          shift and go to state 11
-    CONCA           shift and go to state 12
-    ECRIS           shift and go to state 13
-    -               shift and go to state 14
-    TYPE            shift and go to state 15
-
-    expr                           shift and go to state 43
-
-state 19
-
-    (22) expr -> expr ^ . expr
-    (11) expr -> . FLOAT
-    (12) expr -> . NUM
-    (13) expr -> . NOM
-    (14) expr -> . DOUBLE expr
-    (15) expr -> . DOUBLE CHAINE
-    (16) expr -> . CONCA CHAINE CHAINE
-    (17) expr -> . ECRIS CHAINE
-    (18) expr -> . - expr
-    (19) expr -> . expr < expr
-    (20) expr -> . expr > expr
-    (21) expr -> . expr % expr
-    (22) expr -> . expr ^ expr
-    (23) expr -> . expr / expr
-    (24) expr -> . expr * expr
-    (25) expr -> . expr x expr
-    (26) expr -> . expr - expr
-    (27) expr -> . expr + expr
-    (28) expr -> . TYPE expr
-    (29) expr -> . TYPE CHAINE
-    FLOAT           shift and go to state 9
-    NUM             shift and go to state 10
-    NOM             shift and go to state 31
-    DOUBLE          shift and go to state 11
-    CONCA           shift and go to state 12
-    ECRIS           shift and go to state 13
-    -               shift and go to state 14
-    TYPE            shift and go to state 15
-
-    expr                           shift and go to state 44
-
-state 20
-
-    (23) expr -> expr / . expr
-    (11) expr -> . FLOAT
-    (12) expr -> . NUM
-    (13) expr -> . NOM
-    (14) expr -> . DOUBLE expr
-    (15) expr -> . DOUBLE CHAINE
-    (16) expr -> . CONCA CHAINE CHAINE
-    (17) expr -> . ECRIS CHAINE
-    (18) expr -> . - expr
-    (19) expr -> . expr < expr
-    (20) expr -> . expr > expr
-    (21) expr -> . expr % expr
-    (22) expr -> . expr ^ expr
-    (23) expr -> . expr / expr
-    (24) expr -> . expr * expr
-    (25) expr -> . expr x expr
-    (26) expr -> . expr - expr
-    (27) expr -> . expr + expr
-    (28) expr -> . TYPE expr
-    (29) expr -> . TYPE CHAINE
-    FLOAT           shift and go to state 9
-    NUM             shift and go to state 10
-    NOM             shift and go to state 31
-    DOUBLE          shift and go to state 11
-    CONCA           shift and go to state 12
-    ECRIS           shift and go to state 13
-    -               shift and go to state 14
-    TYPE            shift and go to state 15
+    (31) expr -> - . expr
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    (               shift and go to state 28
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    NOM             shift and go to state 37
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
 
     expr                           shift and go to state 45
 
-state 21
+state 18
 
-    (24) expr -> expr * . expr
-    (11) expr -> . FLOAT
-    (12) expr -> . NUM
-    (13) expr -> . NOM
-    (14) expr -> . DOUBLE expr
-    (15) expr -> . DOUBLE CHAINE
-    (16) expr -> . CONCA CHAINE CHAINE
-    (17) expr -> . ECRIS CHAINE
-    (18) expr -> . - expr
-    (19) expr -> . expr < expr
-    (20) expr -> . expr > expr
-    (21) expr -> . expr % expr
-    (22) expr -> . expr ^ expr
-    (23) expr -> . expr / expr
-    (24) expr -> . expr * expr
-    (25) expr -> . expr x expr
-    (26) expr -> . expr - expr
-    (27) expr -> . expr + expr
-    (28) expr -> . TYPE expr
-    (29) expr -> . TYPE CHAINE
-    FLOAT           shift and go to state 9
-    NUM             shift and go to state 10
-    NOM             shift and go to state 31
-    DOUBLE          shift and go to state 11
-    CONCA           shift and go to state 12
-    ECRIS           shift and go to state 13
-    -               shift and go to state 14
-    TYPE            shift and go to state 15
+    (39) expr -> TYPE . expr
+    (40) expr -> TYPE . CHAINE
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    CHAINE          shift and go to state 47
+    (               shift and go to state 28
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    NOM             shift and go to state 37
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
 
     expr                           shift and go to state 46
 
-state 22
+state 19
 
-    (25) expr -> expr x . expr
-    (11) expr -> . FLOAT
-    (12) expr -> . NUM
-    (13) expr -> . NOM
-    (14) expr -> . DOUBLE expr
-    (15) expr -> . DOUBLE CHAINE
-    (16) expr -> . CONCA CHAINE CHAINE
-    (17) expr -> . ECRIS CHAINE
-    (18) expr -> . - expr
-    (19) expr -> . expr < expr
-    (20) expr -> . expr > expr
-    (21) expr -> . expr % expr
-    (22) expr -> . expr ^ expr
-    (23) expr -> . expr / expr
-    (24) expr -> . expr * expr
-    (25) expr -> . expr x expr
-    (26) expr -> . expr - expr
-    (27) expr -> . expr + expr
-    (28) expr -> . TYPE expr
-    (29) expr -> . TYPE CHAINE
-    FLOAT           shift and go to state 9
-    NUM             shift and go to state 10
-    NOM             shift and go to state 31
-    DOUBLE          shift and go to state 11
-    CONCA           shift and go to state 12
-    ECRIS           shift and go to state 13
-    -               shift and go to state 14
-    TYPE            shift and go to state 15
-
-    expr                           shift and go to state 47
-
-state 23
-
-    (26) expr -> expr - . expr
-    (11) expr -> . FLOAT
-    (12) expr -> . NUM
-    (13) expr -> . NOM
-    (14) expr -> . DOUBLE expr
-    (15) expr -> . DOUBLE CHAINE
-    (16) expr -> . CONCA CHAINE CHAINE
-    (17) expr -> . ECRIS CHAINE
-    (18) expr -> . - expr
-    (19) expr -> . expr < expr
-    (20) expr -> . expr > expr
-    (21) expr -> . expr % expr
-    (22) expr -> . expr ^ expr
-    (23) expr -> . expr / expr
-    (24) expr -> . expr * expr
-    (25) expr -> . expr x expr
-    (26) expr -> . expr - expr
-    (27) expr -> . expr + expr
-    (28) expr -> . TYPE expr
-    (29) expr -> . TYPE CHAINE
-    FLOAT           shift and go to state 9
-    NUM             shift and go to state 10
-    NOM             shift and go to state 31
-    DOUBLE          shift and go to state 11
-    CONCA           shift and go to state 12
-    ECRIS           shift and go to state 13
-    -               shift and go to state 14
-    TYPE            shift and go to state 15
+    (32) expr -> expr % . expr
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    (               shift and go to state 28
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    NOM             shift and go to state 37
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
 
     expr                           shift and go to state 48
 
-state 24
+state 20
 
-    (27) expr -> expr + . expr
-    (11) expr -> . FLOAT
-    (12) expr -> . NUM
-    (13) expr -> . NOM
-    (14) expr -> . DOUBLE expr
-    (15) expr -> . DOUBLE CHAINE
-    (16) expr -> . CONCA CHAINE CHAINE
-    (17) expr -> . ECRIS CHAINE
-    (18) expr -> . - expr
-    (19) expr -> . expr < expr
-    (20) expr -> . expr > expr
-    (21) expr -> . expr % expr
-    (22) expr -> . expr ^ expr
-    (23) expr -> . expr / expr
-    (24) expr -> . expr * expr
-    (25) expr -> . expr x expr
-    (26) expr -> . expr - expr
-    (27) expr -> . expr + expr
-    (28) expr -> . TYPE expr
-    (29) expr -> . TYPE CHAINE
-    FLOAT           shift and go to state 9
-    NUM             shift and go to state 10
-    NOM             shift and go to state 31
-    DOUBLE          shift and go to state 11
-    CONCA           shift and go to state 12
-    ECRIS           shift and go to state 13
-    -               shift and go to state 14
-    TYPE            shift and go to state 15
+    (33) expr -> expr ^ . expr
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    (               shift and go to state 28
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    NOM             shift and go to state 37
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
 
     expr                           shift and go to state 49
 
-state 25
+state 21
 
-    (3) statement -> NOM ( . )
-    )               shift and go to state 50
+    (34) expr -> expr / . expr
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    (               shift and go to state 28
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    NOM             shift and go to state 37
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
 
+    expr                           shift and go to state 50
 
-state 26
+state 22
 
-    (9) variable -> NOM = . CHAINE
-    (10) variable -> NOM = . expr
-    (11) expr -> . FLOAT
-    (12) expr -> . NUM
-    (13) expr -> . NOM
-    (14) expr -> . DOUBLE expr
-    (15) expr -> . DOUBLE CHAINE
-    (16) expr -> . CONCA CHAINE CHAINE
-    (17) expr -> . ECRIS CHAINE
-    (18) expr -> . - expr
-    (19) expr -> . expr < expr
-    (20) expr -> . expr > expr
-    (21) expr -> . expr % expr
-    (22) expr -> . expr ^ expr
-    (23) expr -> . expr / expr
-    (24) expr -> . expr * expr
-    (25) expr -> . expr x expr
-    (26) expr -> . expr - expr
-    (27) expr -> . expr + expr
-    (28) expr -> . TYPE expr
-    (29) expr -> . TYPE CHAINE
-    CHAINE          shift and go to state 51
-    FLOAT           shift and go to state 9
-    NUM             shift and go to state 10
-    NOM             shift and go to state 31
-    DOUBLE          shift and go to state 11
-    CONCA           shift and go to state 12
-    ECRIS           shift and go to state 13
-    -               shift and go to state 14
-    TYPE            shift and go to state 15
+    (35) expr -> expr * . expr
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    (               shift and go to state 28
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    NOM             shift and go to state 37
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
+
+    expr                           shift and go to state 51
+
+state 23
+
+    (36) expr -> expr x . expr
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    (               shift and go to state 28
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    NOM             shift and go to state 37
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
 
     expr                           shift and go to state 52
 
+state 24
+
+    (37) expr -> expr - . expr
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    (               shift and go to state 28
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    NOM             shift and go to state 37
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
+
+    expr                           shift and go to state 53
+
+state 25
+
+    (38) expr -> expr + . expr
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    (               shift and go to state 28
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    NOM             shift and go to state 37
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
+
+    expr                           shift and go to state 54
+
+state 26
+
+    (4) statement -> NOM ( . NOM )
+    (5) statement -> NOM ( . )
+    NOM             shift and go to state 55
+    )               shift and go to state 56
+
+
 state 27
 
-    (4) statement -> SCRAPE URL . CHAINE
-    CHAINE          shift and go to state 53
+    (21) variable -> NOM = . CHAINE
+    (22) variable -> NOM = . expr
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    CHAINE          shift and go to state 57
+    (               shift and go to state 28
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    NOM             shift and go to state 37
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
 
+    expr                           shift and go to state 58
 
 state 28
 
-    (5) statement -> FONC NOM . ( ) : statement
-    (               shift and go to state 54
+    (23) expr -> ( . expr )
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    (               shift and go to state 28
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    NOM             shift and go to state 37
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
 
+    expr                           shift and go to state 31
 
 state 29
 
-    (6) statement -> SI condition . ALORS statement SINON statement
-    ALORS           shift and go to state 55
+    (13) params -> ( ) .
+    $end            reduce using rule 13 (params -> ( ) .)
+    )               reduce using rule 13 (params -> ( ) .)
+    SINON           reduce using rule 13 (params -> ( ) .)
 
 
 state 30
 
-    (30) condition -> expr . NE expr
-    (31) condition -> expr . GE expr
-    (32) condition -> expr . PE expr
-    (33) condition -> expr . EGL expr
-    (19) expr -> expr . < expr
-    (20) expr -> expr . > expr
-    (21) expr -> expr . % expr
-    (22) expr -> expr . ^ expr
-    (23) expr -> expr . / expr
-    (24) expr -> expr . * expr
-    (25) expr -> expr . x expr
-    (26) expr -> expr . - expr
-    (27) expr -> expr . + expr
-    NE              shift and go to state 56
-    GE              shift and go to state 57
-    PE              shift and go to state 58
-    EGL             shift and go to state 59
-    <               shift and go to state 16
-    >               shift and go to state 17
-    %               shift and go to state 18
-    ^               shift and go to state 19
-    /               shift and go to state 20
-    *               shift and go to state 21
-    x               shift and go to state 22
-    -               shift and go to state 23
-    +               shift and go to state 24
+    (14) params -> ( variable . , statement )
+    ,               shift and go to state 59
 
 
 state 31
 
-    (13) expr -> NOM .
-    NE              reduce using rule 13 (expr -> NOM .)
-    GE              reduce using rule 13 (expr -> NOM .)
-    PE              reduce using rule 13 (expr -> NOM .)
-    EGL             reduce using rule 13 (expr -> NOM .)
-    <               reduce using rule 13 (expr -> NOM .)
-    >               reduce using rule 13 (expr -> NOM .)
-    %               reduce using rule 13 (expr -> NOM .)
-    ^               reduce using rule 13 (expr -> NOM .)
-    /               reduce using rule 13 (expr -> NOM .)
-    *               reduce using rule 13 (expr -> NOM .)
-    x               reduce using rule 13 (expr -> NOM .)
-    -               reduce using rule 13 (expr -> NOM .)
-    +               reduce using rule 13 (expr -> NOM .)
-    $end            reduce using rule 13 (expr -> NOM .)
-    FLECHE          reduce using rule 13 (expr -> NOM .)
-    SINON           reduce using rule 13 (expr -> NOM .)
-    ALORS           reduce using rule 13 (expr -> NOM .)
+    (23) expr -> ( expr . )
+    (32) expr -> expr . % expr
+    (33) expr -> expr . ^ expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . x expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    )               shift and go to state 60
+    %               shift and go to state 19
+    ^               shift and go to state 20
+    /               shift and go to state 21
+    *               shift and go to state 22
+    x               shift and go to state 23
+    -               shift and go to state 24
+    +               shift and go to state 25
 
 
 state 32
 
-    (7) statement -> POUR variable . FLECHE expr ALORS statement
-    FLECHE          shift and go to state 60
+    (21) variable -> NOM . = CHAINE
+    (22) variable -> NOM . = expr
+    (26) expr -> NOM .
+    =               shift and go to state 27
+    )               reduce using rule 26 (expr -> NOM .)
+    %               reduce using rule 26 (expr -> NOM .)
+    ^               reduce using rule 26 (expr -> NOM .)
+    /               reduce using rule 26 (expr -> NOM .)
+    *               reduce using rule 26 (expr -> NOM .)
+    x               reduce using rule 26 (expr -> NOM .)
+    -               reduce using rule 26 (expr -> NOM .)
+    +               reduce using rule 26 (expr -> NOM .)
 
 
 state 33
 
-    (9) variable -> NOM . = CHAINE
-    (10) variable -> NOM . = expr
-    =               shift and go to state 26
+    (6) statement -> SCRAPE URL . CHAINE
+    CHAINE          shift and go to state 61
 
 
 state 34
 
-    (14) expr -> DOUBLE expr .
-    (19) expr -> expr . < expr
-    (20) expr -> expr . > expr
-    (21) expr -> expr . % expr
-    (22) expr -> expr . ^ expr
-    (23) expr -> expr . / expr
-    (24) expr -> expr . * expr
-    (25) expr -> expr . x expr
-    (26) expr -> expr . - expr
-    (27) expr -> expr . + expr
-    <               reduce using rule 14 (expr -> DOUBLE expr .)
-    >               reduce using rule 14 (expr -> DOUBLE expr .)
-    $end            reduce using rule 14 (expr -> DOUBLE expr .)
-    NE              reduce using rule 14 (expr -> DOUBLE expr .)
-    GE              reduce using rule 14 (expr -> DOUBLE expr .)
-    PE              reduce using rule 14 (expr -> DOUBLE expr .)
-    EGL             reduce using rule 14 (expr -> DOUBLE expr .)
-    FLECHE          reduce using rule 14 (expr -> DOUBLE expr .)
-    SINON           reduce using rule 14 (expr -> DOUBLE expr .)
-    ALORS           reduce using rule 14 (expr -> DOUBLE expr .)
-    %               shift and go to state 18
-    ^               shift and go to state 19
-    /               shift and go to state 20
-    *               shift and go to state 21
-    x               shift and go to state 22
-    -               shift and go to state 23
-    +               shift and go to state 24
+    (7) statement -> FONC NOM . ( NOM ) : statement
+    (8) statement -> FONC NOM . ( ) : statement
+    (               shift and go to state 62
 
 
 state 35
 
-    (15) expr -> DOUBLE CHAINE .
-    <               reduce using rule 15 (expr -> DOUBLE CHAINE .)
-    >               reduce using rule 15 (expr -> DOUBLE CHAINE .)
-    %               reduce using rule 15 (expr -> DOUBLE CHAINE .)
-    ^               reduce using rule 15 (expr -> DOUBLE CHAINE .)
-    /               reduce using rule 15 (expr -> DOUBLE CHAINE .)
-    *               reduce using rule 15 (expr -> DOUBLE CHAINE .)
-    x               reduce using rule 15 (expr -> DOUBLE CHAINE .)
-    -               reduce using rule 15 (expr -> DOUBLE CHAINE .)
-    +               reduce using rule 15 (expr -> DOUBLE CHAINE .)
-    $end            reduce using rule 15 (expr -> DOUBLE CHAINE .)
-    NE              reduce using rule 15 (expr -> DOUBLE CHAINE .)
-    GE              reduce using rule 15 (expr -> DOUBLE CHAINE .)
-    PE              reduce using rule 15 (expr -> DOUBLE CHAINE .)
-    EGL             reduce using rule 15 (expr -> DOUBLE CHAINE .)
-    FLECHE          reduce using rule 15 (expr -> DOUBLE CHAINE .)
-    SINON           reduce using rule 15 (expr -> DOUBLE CHAINE .)
-    ALORS           reduce using rule 15 (expr -> DOUBLE CHAINE .)
+    (9) statement -> TANTQUE condition . ALORS statement
+    ALORS           shift and go to state 63
 
 
 state 36
 
-    (16) expr -> CONCA CHAINE . CHAINE
-    CHAINE          shift and go to state 61
+    (15) condition -> expr . < expr
+    (16) condition -> expr . > expr
+    (17) condition -> expr . NE expr
+    (18) condition -> expr . GE expr
+    (19) condition -> expr . PE expr
+    (20) condition -> expr . EGL expr
+    (32) expr -> expr . % expr
+    (33) expr -> expr . ^ expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . x expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    <               shift and go to state 64
+    >               shift and go to state 65
+    NE              shift and go to state 66
+    GE              shift and go to state 67
+    PE              shift and go to state 68
+    EGL             shift and go to state 69
+    %               shift and go to state 19
+    ^               shift and go to state 20
+    /               shift and go to state 21
+    *               shift and go to state 22
+    x               shift and go to state 23
+    -               shift and go to state 24
+    +               shift and go to state 25
 
 
 state 37
 
-    (17) expr -> ECRIS CHAINE .
-    <               reduce using rule 17 (expr -> ECRIS CHAINE .)
-    >               reduce using rule 17 (expr -> ECRIS CHAINE .)
-    %               reduce using rule 17 (expr -> ECRIS CHAINE .)
-    ^               reduce using rule 17 (expr -> ECRIS CHAINE .)
-    /               reduce using rule 17 (expr -> ECRIS CHAINE .)
-    *               reduce using rule 17 (expr -> ECRIS CHAINE .)
-    x               reduce using rule 17 (expr -> ECRIS CHAINE .)
-    -               reduce using rule 17 (expr -> ECRIS CHAINE .)
-    +               reduce using rule 17 (expr -> ECRIS CHAINE .)
-    $end            reduce using rule 17 (expr -> ECRIS CHAINE .)
-    NE              reduce using rule 17 (expr -> ECRIS CHAINE .)
-    GE              reduce using rule 17 (expr -> ECRIS CHAINE .)
-    PE              reduce using rule 17 (expr -> ECRIS CHAINE .)
-    EGL             reduce using rule 17 (expr -> ECRIS CHAINE .)
-    FLECHE          reduce using rule 17 (expr -> ECRIS CHAINE .)
-    SINON           reduce using rule 17 (expr -> ECRIS CHAINE .)
-    ALORS           reduce using rule 17 (expr -> ECRIS CHAINE .)
+    (26) expr -> NOM .
+    <               reduce using rule 26 (expr -> NOM .)
+    >               reduce using rule 26 (expr -> NOM .)
+    NE              reduce using rule 26 (expr -> NOM .)
+    GE              reduce using rule 26 (expr -> NOM .)
+    PE              reduce using rule 26 (expr -> NOM .)
+    EGL             reduce using rule 26 (expr -> NOM .)
+    %               reduce using rule 26 (expr -> NOM .)
+    ^               reduce using rule 26 (expr -> NOM .)
+    /               reduce using rule 26 (expr -> NOM .)
+    *               reduce using rule 26 (expr -> NOM .)
+    x               reduce using rule 26 (expr -> NOM .)
+    -               reduce using rule 26 (expr -> NOM .)
+    +               reduce using rule 26 (expr -> NOM .)
+    $end            reduce using rule 26 (expr -> NOM .)
+    )               reduce using rule 26 (expr -> NOM .)
+    ,               reduce using rule 26 (expr -> NOM .)
+    FLECHE          reduce using rule 26 (expr -> NOM .)
+    SINON           reduce using rule 26 (expr -> NOM .)
+    ALORS           reduce using rule 26 (expr -> NOM .)
 
 
 state 38
 
-    (18) expr -> - expr .
-    (19) expr -> expr . < expr
-    (20) expr -> expr . > expr
-    (21) expr -> expr . % expr
-    (22) expr -> expr . ^ expr
-    (23) expr -> expr . / expr
-    (24) expr -> expr . * expr
-    (25) expr -> expr . x expr
-    (26) expr -> expr . - expr
-    (27) expr -> expr . + expr
-    <               reduce using rule 18 (expr -> - expr .)
-    >               reduce using rule 18 (expr -> - expr .)
-    %               reduce using rule 18 (expr -> - expr .)
-    ^               reduce using rule 18 (expr -> - expr .)
-    /               reduce using rule 18 (expr -> - expr .)
-    *               reduce using rule 18 (expr -> - expr .)
-    x               reduce using rule 18 (expr -> - expr .)
-    -               reduce using rule 18 (expr -> - expr .)
-    +               reduce using rule 18 (expr -> - expr .)
-    $end            reduce using rule 18 (expr -> - expr .)
-    NE              reduce using rule 18 (expr -> - expr .)
-    GE              reduce using rule 18 (expr -> - expr .)
-    PE              reduce using rule 18 (expr -> - expr .)
-    EGL             reduce using rule 18 (expr -> - expr .)
-    FLECHE          reduce using rule 18 (expr -> - expr .)
-    SINON           reduce using rule 18 (expr -> - expr .)
-    ALORS           reduce using rule 18 (expr -> - expr .)
+    (10) statement -> SI condition . ALORS statement SINON statement
+    ALORS           shift and go to state 70
 
 
 state 39
 
-    (28) expr -> TYPE expr .
-    (19) expr -> expr . < expr
-    (20) expr -> expr . > expr
-    (21) expr -> expr . % expr
-    (22) expr -> expr . ^ expr
-    (23) expr -> expr . / expr
-    (24) expr -> expr . * expr
-    (25) expr -> expr . x expr
-    (26) expr -> expr . - expr
-    (27) expr -> expr . + expr
-    <               reduce using rule 28 (expr -> TYPE expr .)
-    >               reduce using rule 28 (expr -> TYPE expr .)
-    $end            reduce using rule 28 (expr -> TYPE expr .)
-    NE              reduce using rule 28 (expr -> TYPE expr .)
-    GE              reduce using rule 28 (expr -> TYPE expr .)
-    PE              reduce using rule 28 (expr -> TYPE expr .)
-    EGL             reduce using rule 28 (expr -> TYPE expr .)
-    FLECHE          reduce using rule 28 (expr -> TYPE expr .)
-    SINON           reduce using rule 28 (expr -> TYPE expr .)
-    ALORS           reduce using rule 28 (expr -> TYPE expr .)
-    %               shift and go to state 18
-    ^               shift and go to state 19
-    /               shift and go to state 20
-    *               shift and go to state 21
-    x               shift and go to state 22
-    -               shift and go to state 23
-    +               shift and go to state 24
+    (11) statement -> POUR variable . FLECHE expr ALORS statement
+    FLECHE          shift and go to state 71
 
 
 state 40
 
-    (29) expr -> TYPE CHAINE .
-    <               reduce using rule 29 (expr -> TYPE CHAINE .)
-    >               reduce using rule 29 (expr -> TYPE CHAINE .)
-    %               reduce using rule 29 (expr -> TYPE CHAINE .)
-    ^               reduce using rule 29 (expr -> TYPE CHAINE .)
-    /               reduce using rule 29 (expr -> TYPE CHAINE .)
-    *               reduce using rule 29 (expr -> TYPE CHAINE .)
-    x               reduce using rule 29 (expr -> TYPE CHAINE .)
-    -               reduce using rule 29 (expr -> TYPE CHAINE .)
-    +               reduce using rule 29 (expr -> TYPE CHAINE .)
-    $end            reduce using rule 29 (expr -> TYPE CHAINE .)
-    NE              reduce using rule 29 (expr -> TYPE CHAINE .)
-    GE              reduce using rule 29 (expr -> TYPE CHAINE .)
-    PE              reduce using rule 29 (expr -> TYPE CHAINE .)
-    EGL             reduce using rule 29 (expr -> TYPE CHAINE .)
-    FLECHE          reduce using rule 29 (expr -> TYPE CHAINE .)
-    SINON           reduce using rule 29 (expr -> TYPE CHAINE .)
-    ALORS           reduce using rule 29 (expr -> TYPE CHAINE .)
+    (21) variable -> NOM . = CHAINE
+    (22) variable -> NOM . = expr
+    =               shift and go to state 27
 
 
 state 41
 
-    (19) expr -> expr < expr .
-    (19) expr -> expr . < expr
-    (20) expr -> expr . > expr
-    (21) expr -> expr . % expr
-    (22) expr -> expr . ^ expr
-    (23) expr -> expr . / expr
-    (24) expr -> expr . * expr
-    (25) expr -> expr . x expr
-    (26) expr -> expr . - expr
-    (27) expr -> expr . + expr
-    <               reduce using rule 19 (expr -> expr < expr .)
-    >               reduce using rule 19 (expr -> expr < expr .)
-    $end            reduce using rule 19 (expr -> expr < expr .)
-    NE              reduce using rule 19 (expr -> expr < expr .)
-    GE              reduce using rule 19 (expr -> expr < expr .)
-    PE              reduce using rule 19 (expr -> expr < expr .)
-    EGL             reduce using rule 19 (expr -> expr < expr .)
-    FLECHE          reduce using rule 19 (expr -> expr < expr .)
-    SINON           reduce using rule 19 (expr -> expr < expr .)
-    ALORS           reduce using rule 19 (expr -> expr < expr .)
-    %               shift and go to state 18
-    ^               shift and go to state 19
-    /               shift and go to state 20
-    *               shift and go to state 21
-    x               shift and go to state 22
-    -               shift and go to state 23
-    +               shift and go to state 24
+    (27) expr -> DOUBLE expr .
+    (32) expr -> expr . % expr
+    (33) expr -> expr . ^ expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . x expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    $end            reduce using rule 27 (expr -> DOUBLE expr .)
+    )               reduce using rule 27 (expr -> DOUBLE expr .)
+    <               reduce using rule 27 (expr -> DOUBLE expr .)
+    >               reduce using rule 27 (expr -> DOUBLE expr .)
+    NE              reduce using rule 27 (expr -> DOUBLE expr .)
+    GE              reduce using rule 27 (expr -> DOUBLE expr .)
+    PE              reduce using rule 27 (expr -> DOUBLE expr .)
+    EGL             reduce using rule 27 (expr -> DOUBLE expr .)
+    ,               reduce using rule 27 (expr -> DOUBLE expr .)
+    FLECHE          reduce using rule 27 (expr -> DOUBLE expr .)
+    SINON           reduce using rule 27 (expr -> DOUBLE expr .)
+    ALORS           reduce using rule 27 (expr -> DOUBLE expr .)
+    %               shift and go to state 19
+    ^               shift and go to state 20
+    /               shift and go to state 21
+    *               shift and go to state 22
+    x               shift and go to state 23
+    -               shift and go to state 24
+    +               shift and go to state 25
 
 
 state 42
 
-    (20) expr -> expr > expr .
-    (19) expr -> expr . < expr
-    (20) expr -> expr . > expr
-    (21) expr -> expr . % expr
-    (22) expr -> expr . ^ expr
-    (23) expr -> expr . / expr
-    (24) expr -> expr . * expr
-    (25) expr -> expr . x expr
-    (26) expr -> expr . - expr
-    (27) expr -> expr . + expr
-    <               reduce using rule 20 (expr -> expr > expr .)
-    >               reduce using rule 20 (expr -> expr > expr .)
-    $end            reduce using rule 20 (expr -> expr > expr .)
-    NE              reduce using rule 20 (expr -> expr > expr .)
-    GE              reduce using rule 20 (expr -> expr > expr .)
-    PE              reduce using rule 20 (expr -> expr > expr .)
-    EGL             reduce using rule 20 (expr -> expr > expr .)
-    FLECHE          reduce using rule 20 (expr -> expr > expr .)
-    SINON           reduce using rule 20 (expr -> expr > expr .)
-    ALORS           reduce using rule 20 (expr -> expr > expr .)
-    %               shift and go to state 18
-    ^               shift and go to state 19
-    /               shift and go to state 20
-    *               shift and go to state 21
-    x               shift and go to state 22
-    -               shift and go to state 23
-    +               shift and go to state 24
+    (28) expr -> DOUBLE CHAINE .
+    %               reduce using rule 28 (expr -> DOUBLE CHAINE .)
+    ^               reduce using rule 28 (expr -> DOUBLE CHAINE .)
+    /               reduce using rule 28 (expr -> DOUBLE CHAINE .)
+    *               reduce using rule 28 (expr -> DOUBLE CHAINE .)
+    x               reduce using rule 28 (expr -> DOUBLE CHAINE .)
+    -               reduce using rule 28 (expr -> DOUBLE CHAINE .)
+    +               reduce using rule 28 (expr -> DOUBLE CHAINE .)
+    $end            reduce using rule 28 (expr -> DOUBLE CHAINE .)
+    )               reduce using rule 28 (expr -> DOUBLE CHAINE .)
+    <               reduce using rule 28 (expr -> DOUBLE CHAINE .)
+    >               reduce using rule 28 (expr -> DOUBLE CHAINE .)
+    NE              reduce using rule 28 (expr -> DOUBLE CHAINE .)
+    GE              reduce using rule 28 (expr -> DOUBLE CHAINE .)
+    PE              reduce using rule 28 (expr -> DOUBLE CHAINE .)
+    EGL             reduce using rule 28 (expr -> DOUBLE CHAINE .)
+    ,               reduce using rule 28 (expr -> DOUBLE CHAINE .)
+    FLECHE          reduce using rule 28 (expr -> DOUBLE CHAINE .)
+    SINON           reduce using rule 28 (expr -> DOUBLE CHAINE .)
+    ALORS           reduce using rule 28 (expr -> DOUBLE CHAINE .)
 
 
 state 43
 
-    (21) expr -> expr % expr .
-    (19) expr -> expr . < expr
-    (20) expr -> expr . > expr
-    (21) expr -> expr . % expr
-    (22) expr -> expr . ^ expr
-    (23) expr -> expr . / expr
-    (24) expr -> expr . * expr
-    (25) expr -> expr . x expr
-    (26) expr -> expr . - expr
-    (27) expr -> expr . + expr
-    <               reduce using rule 21 (expr -> expr % expr .)
-    >               reduce using rule 21 (expr -> expr % expr .)
-    %               reduce using rule 21 (expr -> expr % expr .)
-    /               reduce using rule 21 (expr -> expr % expr .)
-    *               reduce using rule 21 (expr -> expr % expr .)
-    x               reduce using rule 21 (expr -> expr % expr .)
-    -               reduce using rule 21 (expr -> expr % expr .)
-    +               reduce using rule 21 (expr -> expr % expr .)
-    $end            reduce using rule 21 (expr -> expr % expr .)
-    NE              reduce using rule 21 (expr -> expr % expr .)
-    GE              reduce using rule 21 (expr -> expr % expr .)
-    PE              reduce using rule 21 (expr -> expr % expr .)
-    EGL             reduce using rule 21 (expr -> expr % expr .)
-    FLECHE          reduce using rule 21 (expr -> expr % expr .)
-    SINON           reduce using rule 21 (expr -> expr % expr .)
-    ALORS           reduce using rule 21 (expr -> expr % expr .)
-    ^               shift and go to state 19
+    (29) expr -> CONCA CHAINE . CHAINE
+    CHAINE          shift and go to state 72
 
 
 state 44
 
-    (22) expr -> expr ^ expr .
-    (19) expr -> expr . < expr
-    (20) expr -> expr . > expr
-    (21) expr -> expr . % expr
-    (22) expr -> expr . ^ expr
-    (23) expr -> expr . / expr
-    (24) expr -> expr . * expr
-    (25) expr -> expr . x expr
-    (26) expr -> expr . - expr
-    (27) expr -> expr . + expr
-    <               reduce using rule 22 (expr -> expr ^ expr .)
-    >               reduce using rule 22 (expr -> expr ^ expr .)
-    %               reduce using rule 22 (expr -> expr ^ expr .)
-    /               reduce using rule 22 (expr -> expr ^ expr .)
-    *               reduce using rule 22 (expr -> expr ^ expr .)
-    x               reduce using rule 22 (expr -> expr ^ expr .)
-    -               reduce using rule 22 (expr -> expr ^ expr .)
-    +               reduce using rule 22 (expr -> expr ^ expr .)
-    $end            reduce using rule 22 (expr -> expr ^ expr .)
-    NE              reduce using rule 22 (expr -> expr ^ expr .)
-    GE              reduce using rule 22 (expr -> expr ^ expr .)
-    PE              reduce using rule 22 (expr -> expr ^ expr .)
-    EGL             reduce using rule 22 (expr -> expr ^ expr .)
-    FLECHE          reduce using rule 22 (expr -> expr ^ expr .)
-    SINON           reduce using rule 22 (expr -> expr ^ expr .)
-    ALORS           reduce using rule 22 (expr -> expr ^ expr .)
-    ^               shift and go to state 19
+    (30) expr -> ECRIS CHAINE .
+    %               reduce using rule 30 (expr -> ECRIS CHAINE .)
+    ^               reduce using rule 30 (expr -> ECRIS CHAINE .)
+    /               reduce using rule 30 (expr -> ECRIS CHAINE .)
+    *               reduce using rule 30 (expr -> ECRIS CHAINE .)
+    x               reduce using rule 30 (expr -> ECRIS CHAINE .)
+    -               reduce using rule 30 (expr -> ECRIS CHAINE .)
+    +               reduce using rule 30 (expr -> ECRIS CHAINE .)
+    $end            reduce using rule 30 (expr -> ECRIS CHAINE .)
+    )               reduce using rule 30 (expr -> ECRIS CHAINE .)
+    <               reduce using rule 30 (expr -> ECRIS CHAINE .)
+    >               reduce using rule 30 (expr -> ECRIS CHAINE .)
+    NE              reduce using rule 30 (expr -> ECRIS CHAINE .)
+    GE              reduce using rule 30 (expr -> ECRIS CHAINE .)
+    PE              reduce using rule 30 (expr -> ECRIS CHAINE .)
+    EGL             reduce using rule 30 (expr -> ECRIS CHAINE .)
+    ,               reduce using rule 30 (expr -> ECRIS CHAINE .)
+    FLECHE          reduce using rule 30 (expr -> ECRIS CHAINE .)
+    SINON           reduce using rule 30 (expr -> ECRIS CHAINE .)
+    ALORS           reduce using rule 30 (expr -> ECRIS CHAINE .)
 
 
 state 45
 
-    (23) expr -> expr / expr .
-    (19) expr -> expr . < expr
-    (20) expr -> expr . > expr
-    (21) expr -> expr . % expr
-    (22) expr -> expr . ^ expr
-    (23) expr -> expr . / expr
-    (24) expr -> expr . * expr
-    (25) expr -> expr . x expr
-    (26) expr -> expr . - expr
-    (27) expr -> expr . + expr
-    <               reduce using rule 23 (expr -> expr / expr .)
-    >               reduce using rule 23 (expr -> expr / expr .)
-    %               reduce using rule 23 (expr -> expr / expr .)
-    /               reduce using rule 23 (expr -> expr / expr .)
-    *               reduce using rule 23 (expr -> expr / expr .)
-    x               reduce using rule 23 (expr -> expr / expr .)
-    -               reduce using rule 23 (expr -> expr / expr .)
-    +               reduce using rule 23 (expr -> expr / expr .)
-    $end            reduce using rule 23 (expr -> expr / expr .)
-    NE              reduce using rule 23 (expr -> expr / expr .)
-    GE              reduce using rule 23 (expr -> expr / expr .)
-    PE              reduce using rule 23 (expr -> expr / expr .)
-    EGL             reduce using rule 23 (expr -> expr / expr .)
-    FLECHE          reduce using rule 23 (expr -> expr / expr .)
-    SINON           reduce using rule 23 (expr -> expr / expr .)
-    ALORS           reduce using rule 23 (expr -> expr / expr .)
-    ^               shift and go to state 19
+    (31) expr -> - expr .
+    (32) expr -> expr . % expr
+    (33) expr -> expr . ^ expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . x expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    %               reduce using rule 31 (expr -> - expr .)
+    ^               reduce using rule 31 (expr -> - expr .)
+    /               reduce using rule 31 (expr -> - expr .)
+    *               reduce using rule 31 (expr -> - expr .)
+    x               reduce using rule 31 (expr -> - expr .)
+    -               reduce using rule 31 (expr -> - expr .)
+    +               reduce using rule 31 (expr -> - expr .)
+    $end            reduce using rule 31 (expr -> - expr .)
+    )               reduce using rule 31 (expr -> - expr .)
+    <               reduce using rule 31 (expr -> - expr .)
+    >               reduce using rule 31 (expr -> - expr .)
+    NE              reduce using rule 31 (expr -> - expr .)
+    GE              reduce using rule 31 (expr -> - expr .)
+    PE              reduce using rule 31 (expr -> - expr .)
+    EGL             reduce using rule 31 (expr -> - expr .)
+    ,               reduce using rule 31 (expr -> - expr .)
+    FLECHE          reduce using rule 31 (expr -> - expr .)
+    SINON           reduce using rule 31 (expr -> - expr .)
+    ALORS           reduce using rule 31 (expr -> - expr .)
 
 
 state 46
 
-    (24) expr -> expr * expr .
-    (19) expr -> expr . < expr
-    (20) expr -> expr . > expr
-    (21) expr -> expr . % expr
-    (22) expr -> expr . ^ expr
-    (23) expr -> expr . / expr
-    (24) expr -> expr . * expr
-    (25) expr -> expr . x expr
-    (26) expr -> expr . - expr
-    (27) expr -> expr . + expr
-    <               reduce using rule 24 (expr -> expr * expr .)
-    >               reduce using rule 24 (expr -> expr * expr .)
-    %               reduce using rule 24 (expr -> expr * expr .)
-    /               reduce using rule 24 (expr -> expr * expr .)
-    *               reduce using rule 24 (expr -> expr * expr .)
-    x               reduce using rule 24 (expr -> expr * expr .)
-    -               reduce using rule 24 (expr -> expr * expr .)
-    +               reduce using rule 24 (expr -> expr * expr .)
-    $end            reduce using rule 24 (expr -> expr * expr .)
-    NE              reduce using rule 24 (expr -> expr * expr .)
-    GE              reduce using rule 24 (expr -> expr * expr .)
-    PE              reduce using rule 24 (expr -> expr * expr .)
-    EGL             reduce using rule 24 (expr -> expr * expr .)
-    FLECHE          reduce using rule 24 (expr -> expr * expr .)
-    SINON           reduce using rule 24 (expr -> expr * expr .)
-    ALORS           reduce using rule 24 (expr -> expr * expr .)
-    ^               shift and go to state 19
+    (39) expr -> TYPE expr .
+    (32) expr -> expr . % expr
+    (33) expr -> expr . ^ expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . x expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    $end            reduce using rule 39 (expr -> TYPE expr .)
+    )               reduce using rule 39 (expr -> TYPE expr .)
+    <               reduce using rule 39 (expr -> TYPE expr .)
+    >               reduce using rule 39 (expr -> TYPE expr .)
+    NE              reduce using rule 39 (expr -> TYPE expr .)
+    GE              reduce using rule 39 (expr -> TYPE expr .)
+    PE              reduce using rule 39 (expr -> TYPE expr .)
+    EGL             reduce using rule 39 (expr -> TYPE expr .)
+    ,               reduce using rule 39 (expr -> TYPE expr .)
+    FLECHE          reduce using rule 39 (expr -> TYPE expr .)
+    SINON           reduce using rule 39 (expr -> TYPE expr .)
+    ALORS           reduce using rule 39 (expr -> TYPE expr .)
+    %               shift and go to state 19
+    ^               shift and go to state 20
+    /               shift and go to state 21
+    *               shift and go to state 22
+    x               shift and go to state 23
+    -               shift and go to state 24
+    +               shift and go to state 25
 
 
 state 47
 
-    (25) expr -> expr x expr .
-    (19) expr -> expr . < expr
-    (20) expr -> expr . > expr
-    (21) expr -> expr . % expr
-    (22) expr -> expr . ^ expr
-    (23) expr -> expr . / expr
-    (24) expr -> expr . * expr
-    (25) expr -> expr . x expr
-    (26) expr -> expr . - expr
-    (27) expr -> expr . + expr
-    <               reduce using rule 25 (expr -> expr x expr .)
-    >               reduce using rule 25 (expr -> expr x expr .)
-    %               reduce using rule 25 (expr -> expr x expr .)
-    /               reduce using rule 25 (expr -> expr x expr .)
-    *               reduce using rule 25 (expr -> expr x expr .)
-    x               reduce using rule 25 (expr -> expr x expr .)
-    -               reduce using rule 25 (expr -> expr x expr .)
-    +               reduce using rule 25 (expr -> expr x expr .)
-    $end            reduce using rule 25 (expr -> expr x expr .)
-    NE              reduce using rule 25 (expr -> expr x expr .)
-    GE              reduce using rule 25 (expr -> expr x expr .)
-    PE              reduce using rule 25 (expr -> expr x expr .)
-    EGL             reduce using rule 25 (expr -> expr x expr .)
-    FLECHE          reduce using rule 25 (expr -> expr x expr .)
-    SINON           reduce using rule 25 (expr -> expr x expr .)
-    ALORS           reduce using rule 25 (expr -> expr x expr .)
-    ^               shift and go to state 19
+    (40) expr -> TYPE CHAINE .
+    %               reduce using rule 40 (expr -> TYPE CHAINE .)
+    ^               reduce using rule 40 (expr -> TYPE CHAINE .)
+    /               reduce using rule 40 (expr -> TYPE CHAINE .)
+    *               reduce using rule 40 (expr -> TYPE CHAINE .)
+    x               reduce using rule 40 (expr -> TYPE CHAINE .)
+    -               reduce using rule 40 (expr -> TYPE CHAINE .)
+    +               reduce using rule 40 (expr -> TYPE CHAINE .)
+    $end            reduce using rule 40 (expr -> TYPE CHAINE .)
+    )               reduce using rule 40 (expr -> TYPE CHAINE .)
+    <               reduce using rule 40 (expr -> TYPE CHAINE .)
+    >               reduce using rule 40 (expr -> TYPE CHAINE .)
+    NE              reduce using rule 40 (expr -> TYPE CHAINE .)
+    GE              reduce using rule 40 (expr -> TYPE CHAINE .)
+    PE              reduce using rule 40 (expr -> TYPE CHAINE .)
+    EGL             reduce using rule 40 (expr -> TYPE CHAINE .)
+    ,               reduce using rule 40 (expr -> TYPE CHAINE .)
+    FLECHE          reduce using rule 40 (expr -> TYPE CHAINE .)
+    SINON           reduce using rule 40 (expr -> TYPE CHAINE .)
+    ALORS           reduce using rule 40 (expr -> TYPE CHAINE .)
 
 
 state 48
 
-    (26) expr -> expr - expr .
-    (19) expr -> expr . < expr
-    (20) expr -> expr . > expr
-    (21) expr -> expr . % expr
-    (22) expr -> expr . ^ expr
-    (23) expr -> expr . / expr
-    (24) expr -> expr . * expr
-    (25) expr -> expr . x expr
-    (26) expr -> expr . - expr
-    (27) expr -> expr . + expr
-    <               reduce using rule 26 (expr -> expr - expr .)
-    >               reduce using rule 26 (expr -> expr - expr .)
-    -               reduce using rule 26 (expr -> expr - expr .)
-    +               reduce using rule 26 (expr -> expr - expr .)
-    $end            reduce using rule 26 (expr -> expr - expr .)
-    NE              reduce using rule 26 (expr -> expr - expr .)
-    GE              reduce using rule 26 (expr -> expr - expr .)
-    PE              reduce using rule 26 (expr -> expr - expr .)
-    EGL             reduce using rule 26 (expr -> expr - expr .)
-    FLECHE          reduce using rule 26 (expr -> expr - expr .)
-    SINON           reduce using rule 26 (expr -> expr - expr .)
-    ALORS           reduce using rule 26 (expr -> expr - expr .)
-    %               shift and go to state 18
-    ^               shift and go to state 19
-    /               shift and go to state 20
-    *               shift and go to state 21
-    x               shift and go to state 22
+    (32) expr -> expr % expr .
+    (32) expr -> expr . % expr
+    (33) expr -> expr . ^ expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . x expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    %               reduce using rule 32 (expr -> expr % expr .)
+    /               reduce using rule 32 (expr -> expr % expr .)
+    *               reduce using rule 32 (expr -> expr % expr .)
+    x               reduce using rule 32 (expr -> expr % expr .)
+    -               reduce using rule 32 (expr -> expr % expr .)
+    +               reduce using rule 32 (expr -> expr % expr .)
+    $end            reduce using rule 32 (expr -> expr % expr .)
+    )               reduce using rule 32 (expr -> expr % expr .)
+    <               reduce using rule 32 (expr -> expr % expr .)
+    >               reduce using rule 32 (expr -> expr % expr .)
+    NE              reduce using rule 32 (expr -> expr % expr .)
+    GE              reduce using rule 32 (expr -> expr % expr .)
+    PE              reduce using rule 32 (expr -> expr % expr .)
+    EGL             reduce using rule 32 (expr -> expr % expr .)
+    ,               reduce using rule 32 (expr -> expr % expr .)
+    FLECHE          reduce using rule 32 (expr -> expr % expr .)
+    SINON           reduce using rule 32 (expr -> expr % expr .)
+    ALORS           reduce using rule 32 (expr -> expr % expr .)
+    ^               shift and go to state 20
 
 
 state 49
 
-    (27) expr -> expr + expr .
-    (19) expr -> expr . < expr
-    (20) expr -> expr . > expr
-    (21) expr -> expr . % expr
-    (22) expr -> expr . ^ expr
-    (23) expr -> expr . / expr
-    (24) expr -> expr . * expr
-    (25) expr -> expr . x expr
-    (26) expr -> expr . - expr
-    (27) expr -> expr . + expr
-    <               reduce using rule 27 (expr -> expr + expr .)
-    >               reduce using rule 27 (expr -> expr + expr .)
-    -               reduce using rule 27 (expr -> expr + expr .)
-    +               reduce using rule 27 (expr -> expr + expr .)
-    $end            reduce using rule 27 (expr -> expr + expr .)
-    NE              reduce using rule 27 (expr -> expr + expr .)
-    GE              reduce using rule 27 (expr -> expr + expr .)
-    PE              reduce using rule 27 (expr -> expr + expr .)
-    EGL             reduce using rule 27 (expr -> expr + expr .)
-    FLECHE          reduce using rule 27 (expr -> expr + expr .)
-    SINON           reduce using rule 27 (expr -> expr + expr .)
-    ALORS           reduce using rule 27 (expr -> expr + expr .)
-    %               shift and go to state 18
-    ^               shift and go to state 19
-    /               shift and go to state 20
-    *               shift and go to state 21
-    x               shift and go to state 22
+    (33) expr -> expr ^ expr .
+    (32) expr -> expr . % expr
+    (33) expr -> expr . ^ expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . x expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    %               reduce using rule 33 (expr -> expr ^ expr .)
+    /               reduce using rule 33 (expr -> expr ^ expr .)
+    *               reduce using rule 33 (expr -> expr ^ expr .)
+    x               reduce using rule 33 (expr -> expr ^ expr .)
+    -               reduce using rule 33 (expr -> expr ^ expr .)
+    +               reduce using rule 33 (expr -> expr ^ expr .)
+    $end            reduce using rule 33 (expr -> expr ^ expr .)
+    )               reduce using rule 33 (expr -> expr ^ expr .)
+    <               reduce using rule 33 (expr -> expr ^ expr .)
+    >               reduce using rule 33 (expr -> expr ^ expr .)
+    NE              reduce using rule 33 (expr -> expr ^ expr .)
+    GE              reduce using rule 33 (expr -> expr ^ expr .)
+    PE              reduce using rule 33 (expr -> expr ^ expr .)
+    EGL             reduce using rule 33 (expr -> expr ^ expr .)
+    ,               reduce using rule 33 (expr -> expr ^ expr .)
+    FLECHE          reduce using rule 33 (expr -> expr ^ expr .)
+    SINON           reduce using rule 33 (expr -> expr ^ expr .)
+    ALORS           reduce using rule 33 (expr -> expr ^ expr .)
+    ^               shift and go to state 20
 
 
 state 50
 
-    (3) statement -> NOM ( ) .
-    $end            reduce using rule 3 (statement -> NOM ( ) .)
-    SINON           reduce using rule 3 (statement -> NOM ( ) .)
+    (34) expr -> expr / expr .
+    (32) expr -> expr . % expr
+    (33) expr -> expr . ^ expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . x expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    %               reduce using rule 34 (expr -> expr / expr .)
+    /               reduce using rule 34 (expr -> expr / expr .)
+    *               reduce using rule 34 (expr -> expr / expr .)
+    x               reduce using rule 34 (expr -> expr / expr .)
+    -               reduce using rule 34 (expr -> expr / expr .)
+    +               reduce using rule 34 (expr -> expr / expr .)
+    $end            reduce using rule 34 (expr -> expr / expr .)
+    )               reduce using rule 34 (expr -> expr / expr .)
+    <               reduce using rule 34 (expr -> expr / expr .)
+    >               reduce using rule 34 (expr -> expr / expr .)
+    NE              reduce using rule 34 (expr -> expr / expr .)
+    GE              reduce using rule 34 (expr -> expr / expr .)
+    PE              reduce using rule 34 (expr -> expr / expr .)
+    EGL             reduce using rule 34 (expr -> expr / expr .)
+    ,               reduce using rule 34 (expr -> expr / expr .)
+    FLECHE          reduce using rule 34 (expr -> expr / expr .)
+    SINON           reduce using rule 34 (expr -> expr / expr .)
+    ALORS           reduce using rule 34 (expr -> expr / expr .)
+    ^               shift and go to state 20
 
 
 state 51
 
-    (9) variable -> NOM = CHAINE .
-    $end            reduce using rule 9 (variable -> NOM = CHAINE .)
-    FLECHE          reduce using rule 9 (variable -> NOM = CHAINE .)
-    SINON           reduce using rule 9 (variable -> NOM = CHAINE .)
+    (35) expr -> expr * expr .
+    (32) expr -> expr . % expr
+    (33) expr -> expr . ^ expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . x expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    %               reduce using rule 35 (expr -> expr * expr .)
+    /               reduce using rule 35 (expr -> expr * expr .)
+    *               reduce using rule 35 (expr -> expr * expr .)
+    x               reduce using rule 35 (expr -> expr * expr .)
+    -               reduce using rule 35 (expr -> expr * expr .)
+    +               reduce using rule 35 (expr -> expr * expr .)
+    $end            reduce using rule 35 (expr -> expr * expr .)
+    )               reduce using rule 35 (expr -> expr * expr .)
+    <               reduce using rule 35 (expr -> expr * expr .)
+    >               reduce using rule 35 (expr -> expr * expr .)
+    NE              reduce using rule 35 (expr -> expr * expr .)
+    GE              reduce using rule 35 (expr -> expr * expr .)
+    PE              reduce using rule 35 (expr -> expr * expr .)
+    EGL             reduce using rule 35 (expr -> expr * expr .)
+    ,               reduce using rule 35 (expr -> expr * expr .)
+    FLECHE          reduce using rule 35 (expr -> expr * expr .)
+    SINON           reduce using rule 35 (expr -> expr * expr .)
+    ALORS           reduce using rule 35 (expr -> expr * expr .)
+    ^               shift and go to state 20
 
 
 state 52
 
-    (10) variable -> NOM = expr .
-    (19) expr -> expr . < expr
-    (20) expr -> expr . > expr
-    (21) expr -> expr . % expr
-    (22) expr -> expr . ^ expr
-    (23) expr -> expr . / expr
-    (24) expr -> expr . * expr
-    (25) expr -> expr . x expr
-    (26) expr -> expr . - expr
-    (27) expr -> expr . + expr
-    $end            reduce using rule 10 (variable -> NOM = expr .)
-    FLECHE          reduce using rule 10 (variable -> NOM = expr .)
-    SINON           reduce using rule 10 (variable -> NOM = expr .)
-    <               shift and go to state 16
-    >               shift and go to state 17
-    %               shift and go to state 18
-    ^               shift and go to state 19
-    /               shift and go to state 20
-    *               shift and go to state 21
-    x               shift and go to state 22
-    -               shift and go to state 23
-    +               shift and go to state 24
+    (36) expr -> expr x expr .
+    (32) expr -> expr . % expr
+    (33) expr -> expr . ^ expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . x expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    %               reduce using rule 36 (expr -> expr x expr .)
+    /               reduce using rule 36 (expr -> expr x expr .)
+    *               reduce using rule 36 (expr -> expr x expr .)
+    x               reduce using rule 36 (expr -> expr x expr .)
+    -               reduce using rule 36 (expr -> expr x expr .)
+    +               reduce using rule 36 (expr -> expr x expr .)
+    $end            reduce using rule 36 (expr -> expr x expr .)
+    )               reduce using rule 36 (expr -> expr x expr .)
+    <               reduce using rule 36 (expr -> expr x expr .)
+    >               reduce using rule 36 (expr -> expr x expr .)
+    NE              reduce using rule 36 (expr -> expr x expr .)
+    GE              reduce using rule 36 (expr -> expr x expr .)
+    PE              reduce using rule 36 (expr -> expr x expr .)
+    EGL             reduce using rule 36 (expr -> expr x expr .)
+    ,               reduce using rule 36 (expr -> expr x expr .)
+    FLECHE          reduce using rule 36 (expr -> expr x expr .)
+    SINON           reduce using rule 36 (expr -> expr x expr .)
+    ALORS           reduce using rule 36 (expr -> expr x expr .)
+    ^               shift and go to state 20
 
 
 state 53
 
-    (4) statement -> SCRAPE URL CHAINE .
-    $end            reduce using rule 4 (statement -> SCRAPE URL CHAINE .)
-    SINON           reduce using rule 4 (statement -> SCRAPE URL CHAINE .)
+    (37) expr -> expr - expr .
+    (32) expr -> expr . % expr
+    (33) expr -> expr . ^ expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . x expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    -               reduce using rule 37 (expr -> expr - expr .)
+    +               reduce using rule 37 (expr -> expr - expr .)
+    $end            reduce using rule 37 (expr -> expr - expr .)
+    )               reduce using rule 37 (expr -> expr - expr .)
+    <               reduce using rule 37 (expr -> expr - expr .)
+    >               reduce using rule 37 (expr -> expr - expr .)
+    NE              reduce using rule 37 (expr -> expr - expr .)
+    GE              reduce using rule 37 (expr -> expr - expr .)
+    PE              reduce using rule 37 (expr -> expr - expr .)
+    EGL             reduce using rule 37 (expr -> expr - expr .)
+    ,               reduce using rule 37 (expr -> expr - expr .)
+    FLECHE          reduce using rule 37 (expr -> expr - expr .)
+    SINON           reduce using rule 37 (expr -> expr - expr .)
+    ALORS           reduce using rule 37 (expr -> expr - expr .)
+    %               shift and go to state 19
+    ^               shift and go to state 20
+    /               shift and go to state 21
+    *               shift and go to state 22
+    x               shift and go to state 23
 
 
 state 54
 
-    (5) statement -> FONC NOM ( . ) : statement
-    )               shift and go to state 62
+    (38) expr -> expr + expr .
+    (32) expr -> expr . % expr
+    (33) expr -> expr . ^ expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . x expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    -               reduce using rule 38 (expr -> expr + expr .)
+    +               reduce using rule 38 (expr -> expr + expr .)
+    $end            reduce using rule 38 (expr -> expr + expr .)
+    )               reduce using rule 38 (expr -> expr + expr .)
+    <               reduce using rule 38 (expr -> expr + expr .)
+    >               reduce using rule 38 (expr -> expr + expr .)
+    NE              reduce using rule 38 (expr -> expr + expr .)
+    GE              reduce using rule 38 (expr -> expr + expr .)
+    PE              reduce using rule 38 (expr -> expr + expr .)
+    EGL             reduce using rule 38 (expr -> expr + expr .)
+    ,               reduce using rule 38 (expr -> expr + expr .)
+    FLECHE          reduce using rule 38 (expr -> expr + expr .)
+    SINON           reduce using rule 38 (expr -> expr + expr .)
+    ALORS           reduce using rule 38 (expr -> expr + expr .)
+    %               shift and go to state 19
+    ^               shift and go to state 20
+    /               shift and go to state 21
+    *               shift and go to state 22
+    x               shift and go to state 23
 
 
 state 55
 
-    (6) statement -> SI condition ALORS . statement SINON statement
-    (1) statement -> . expr
-    (2) statement -> . variable
-    (3) statement -> . NOM ( )
-    (4) statement -> . SCRAPE URL CHAINE
-    (5) statement -> . FONC NOM ( ) : statement
-    (6) statement -> . SI condition ALORS statement SINON statement
-    (7) statement -> . POUR variable FLECHE expr ALORS statement
-    (8) statement -> .
-    (11) expr -> . FLOAT
-    (12) expr -> . NUM
-    (13) expr -> . NOM
-    (14) expr -> . DOUBLE expr
-    (15) expr -> . DOUBLE CHAINE
-    (16) expr -> . CONCA CHAINE CHAINE
-    (17) expr -> . ECRIS CHAINE
-    (18) expr -> . - expr
-    (19) expr -> . expr < expr
-    (20) expr -> . expr > expr
-    (21) expr -> . expr % expr
-    (22) expr -> . expr ^ expr
-    (23) expr -> . expr / expr
-    (24) expr -> . expr * expr
-    (25) expr -> . expr x expr
-    (26) expr -> . expr - expr
-    (27) expr -> . expr + expr
-    (28) expr -> . TYPE expr
-    (29) expr -> . TYPE CHAINE
-    (9) variable -> . NOM = CHAINE
-    (10) variable -> . NOM = expr
-    NOM             shift and go to state 4
-    SCRAPE          shift and go to state 5
-    FONC            shift and go to state 6
-    SI              shift and go to state 7
-    POUR            shift and go to state 8
-    SINON           reduce using rule 8 (statement -> .)
-    FLOAT           shift and go to state 9
-    NUM             shift and go to state 10
-    DOUBLE          shift and go to state 11
-    CONCA           shift and go to state 12
-    ECRIS           shift and go to state 13
-    -               shift and go to state 14
-    TYPE            shift and go to state 15
+    (4) statement -> NOM ( NOM . )
+    )               shift and go to state 73
 
-    statement                      shift and go to state 63
-    expr                           shift and go to state 2
-    variable                       shift and go to state 3
 
 state 56
 
-    (30) condition -> expr NE . expr
-    (11) expr -> . FLOAT
-    (12) expr -> . NUM
-    (13) expr -> . NOM
-    (14) expr -> . DOUBLE expr
-    (15) expr -> . DOUBLE CHAINE
-    (16) expr -> . CONCA CHAINE CHAINE
-    (17) expr -> . ECRIS CHAINE
-    (18) expr -> . - expr
-    (19) expr -> . expr < expr
-    (20) expr -> . expr > expr
-    (21) expr -> . expr % expr
-    (22) expr -> . expr ^ expr
-    (23) expr -> . expr / expr
-    (24) expr -> . expr * expr
-    (25) expr -> . expr x expr
-    (26) expr -> . expr - expr
-    (27) expr -> . expr + expr
-    (28) expr -> . TYPE expr
-    (29) expr -> . TYPE CHAINE
-    FLOAT           shift and go to state 9
-    NUM             shift and go to state 10
-    NOM             shift and go to state 31
-    DOUBLE          shift and go to state 11
-    CONCA           shift and go to state 12
-    ECRIS           shift and go to state 13
-    -               shift and go to state 14
-    TYPE            shift and go to state 15
+    (5) statement -> NOM ( ) .
+    $end            reduce using rule 5 (statement -> NOM ( ) .)
+    )               reduce using rule 5 (statement -> NOM ( ) .)
+    SINON           reduce using rule 5 (statement -> NOM ( ) .)
 
-    expr                           shift and go to state 64
 
 state 57
 
-    (31) condition -> expr GE . expr
-    (11) expr -> . FLOAT
-    (12) expr -> . NUM
-    (13) expr -> . NOM
-    (14) expr -> . DOUBLE expr
-    (15) expr -> . DOUBLE CHAINE
-    (16) expr -> . CONCA CHAINE CHAINE
-    (17) expr -> . ECRIS CHAINE
-    (18) expr -> . - expr
-    (19) expr -> . expr < expr
-    (20) expr -> . expr > expr
-    (21) expr -> . expr % expr
-    (22) expr -> . expr ^ expr
-    (23) expr -> . expr / expr
-    (24) expr -> . expr * expr
-    (25) expr -> . expr x expr
-    (26) expr -> . expr - expr
-    (27) expr -> . expr + expr
-    (28) expr -> . TYPE expr
-    (29) expr -> . TYPE CHAINE
-    FLOAT           shift and go to state 9
-    NUM             shift and go to state 10
-    NOM             shift and go to state 31
-    DOUBLE          shift and go to state 11
-    CONCA           shift and go to state 12
-    ECRIS           shift and go to state 13
-    -               shift and go to state 14
-    TYPE            shift and go to state 15
+    (21) variable -> NOM = CHAINE .
+    $end            reduce using rule 21 (variable -> NOM = CHAINE .)
+    ,               reduce using rule 21 (variable -> NOM = CHAINE .)
+    FLECHE          reduce using rule 21 (variable -> NOM = CHAINE .)
+    )               reduce using rule 21 (variable -> NOM = CHAINE .)
+    SINON           reduce using rule 21 (variable -> NOM = CHAINE .)
 
-    expr                           shift and go to state 65
 
 state 58
 
-    (32) condition -> expr PE . expr
-    (11) expr -> . FLOAT
-    (12) expr -> . NUM
-    (13) expr -> . NOM
-    (14) expr -> . DOUBLE expr
-    (15) expr -> . DOUBLE CHAINE
-    (16) expr -> . CONCA CHAINE CHAINE
-    (17) expr -> . ECRIS CHAINE
-    (18) expr -> . - expr
-    (19) expr -> . expr < expr
-    (20) expr -> . expr > expr
-    (21) expr -> . expr % expr
-    (22) expr -> . expr ^ expr
-    (23) expr -> . expr / expr
-    (24) expr -> . expr * expr
-    (25) expr -> . expr x expr
-    (26) expr -> . expr - expr
-    (27) expr -> . expr + expr
-    (28) expr -> . TYPE expr
-    (29) expr -> . TYPE CHAINE
-    FLOAT           shift and go to state 9
-    NUM             shift and go to state 10
-    NOM             shift and go to state 31
-    DOUBLE          shift and go to state 11
-    CONCA           shift and go to state 12
-    ECRIS           shift and go to state 13
-    -               shift and go to state 14
-    TYPE            shift and go to state 15
+    (22) variable -> NOM = expr .
+    (32) expr -> expr . % expr
+    (33) expr -> expr . ^ expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . x expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    $end            reduce using rule 22 (variable -> NOM = expr .)
+    ,               reduce using rule 22 (variable -> NOM = expr .)
+    FLECHE          reduce using rule 22 (variable -> NOM = expr .)
+    )               reduce using rule 22 (variable -> NOM = expr .)
+    SINON           reduce using rule 22 (variable -> NOM = expr .)
+    %               shift and go to state 19
+    ^               shift and go to state 20
+    /               shift and go to state 21
+    *               shift and go to state 22
+    x               shift and go to state 23
+    -               shift and go to state 24
+    +               shift and go to state 25
 
-    expr                           shift and go to state 66
 
 state 59
 
-    (33) condition -> expr EGL . expr
-    (11) expr -> . FLOAT
-    (12) expr -> . NUM
-    (13) expr -> . NOM
-    (14) expr -> . DOUBLE expr
-    (15) expr -> . DOUBLE CHAINE
-    (16) expr -> . CONCA CHAINE CHAINE
-    (17) expr -> . ECRIS CHAINE
-    (18) expr -> . - expr
-    (19) expr -> . expr < expr
-    (20) expr -> . expr > expr
-    (21) expr -> . expr % expr
-    (22) expr -> . expr ^ expr
-    (23) expr -> . expr / expr
-    (24) expr -> . expr * expr
-    (25) expr -> . expr x expr
-    (26) expr -> . expr - expr
-    (27) expr -> . expr + expr
-    (28) expr -> . TYPE expr
-    (29) expr -> . TYPE CHAINE
-    FLOAT           shift and go to state 9
-    NUM             shift and go to state 10
-    NOM             shift and go to state 31
-    DOUBLE          shift and go to state 11
-    CONCA           shift and go to state 12
-    ECRIS           shift and go to state 13
-    -               shift and go to state 14
-    TYPE            shift and go to state 15
+    (14) params -> ( variable , . statement )
+    (1) statement -> . params
+    (2) statement -> . expr
+    (3) statement -> . variable
+    (4) statement -> . NOM ( NOM )
+    (5) statement -> . NOM ( )
+    (6) statement -> . SCRAPE URL CHAINE
+    (7) statement -> . FONC NOM ( NOM ) : statement
+    (8) statement -> . FONC NOM ( ) : statement
+    (9) statement -> . TANTQUE condition ALORS statement
+    (10) statement -> . SI condition ALORS statement SINON statement
+    (11) statement -> . POUR variable FLECHE expr ALORS statement
+    (12) statement -> .
+    (13) params -> . ( )
+    (14) params -> . ( variable , statement )
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    (21) variable -> . NOM = CHAINE
+    (22) variable -> . NOM = expr
+    NOM             shift and go to state 5
+    SCRAPE          shift and go to state 7
+    FONC            shift and go to state 8
+    TANTQUE         shift and go to state 9
+    SI              shift and go to state 10
+    POUR            shift and go to state 11
+    )               reduce using rule 12 (statement -> .)
+    (               shift and go to state 6
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
 
-    expr                           shift and go to state 67
+    variable                       shift and go to state 4
+    statement                      shift and go to state 74
+    params                         shift and go to state 2
+    expr                           shift and go to state 3
 
 state 60
 
-    (7) statement -> POUR variable FLECHE . expr ALORS statement
-    (11) expr -> . FLOAT
-    (12) expr -> . NUM
-    (13) expr -> . NOM
-    (14) expr -> . DOUBLE expr
-    (15) expr -> . DOUBLE CHAINE
-    (16) expr -> . CONCA CHAINE CHAINE
-    (17) expr -> . ECRIS CHAINE
-    (18) expr -> . - expr
-    (19) expr -> . expr < expr
-    (20) expr -> . expr > expr
-    (21) expr -> . expr % expr
-    (22) expr -> . expr ^ expr
-    (23) expr -> . expr / expr
-    (24) expr -> . expr * expr
-    (25) expr -> . expr x expr
-    (26) expr -> . expr - expr
-    (27) expr -> . expr + expr
-    (28) expr -> . TYPE expr
-    (29) expr -> . TYPE CHAINE
-    FLOAT           shift and go to state 9
-    NUM             shift and go to state 10
-    NOM             shift and go to state 31
-    DOUBLE          shift and go to state 11
-    CONCA           shift and go to state 12
-    ECRIS           shift and go to state 13
-    -               shift and go to state 14
-    TYPE            shift and go to state 15
+    (23) expr -> ( expr ) .
+    %               reduce using rule 23 (expr -> ( expr ) .)
+    ^               reduce using rule 23 (expr -> ( expr ) .)
+    /               reduce using rule 23 (expr -> ( expr ) .)
+    *               reduce using rule 23 (expr -> ( expr ) .)
+    x               reduce using rule 23 (expr -> ( expr ) .)
+    -               reduce using rule 23 (expr -> ( expr ) .)
+    +               reduce using rule 23 (expr -> ( expr ) .)
+    $end            reduce using rule 23 (expr -> ( expr ) .)
+    )               reduce using rule 23 (expr -> ( expr ) .)
+    <               reduce using rule 23 (expr -> ( expr ) .)
+    >               reduce using rule 23 (expr -> ( expr ) .)
+    NE              reduce using rule 23 (expr -> ( expr ) .)
+    GE              reduce using rule 23 (expr -> ( expr ) .)
+    PE              reduce using rule 23 (expr -> ( expr ) .)
+    EGL             reduce using rule 23 (expr -> ( expr ) .)
+    ,               reduce using rule 23 (expr -> ( expr ) .)
+    FLECHE          reduce using rule 23 (expr -> ( expr ) .)
+    SINON           reduce using rule 23 (expr -> ( expr ) .)
+    ALORS           reduce using rule 23 (expr -> ( expr ) .)
 
-    expr                           shift and go to state 68
 
 state 61
 
-    (16) expr -> CONCA CHAINE CHAINE .
-    <               reduce using rule 16 (expr -> CONCA CHAINE CHAINE .)
-    >               reduce using rule 16 (expr -> CONCA CHAINE CHAINE .)
-    %               reduce using rule 16 (expr -> CONCA CHAINE CHAINE .)
-    ^               reduce using rule 16 (expr -> CONCA CHAINE CHAINE .)
-    /               reduce using rule 16 (expr -> CONCA CHAINE CHAINE .)
-    *               reduce using rule 16 (expr -> CONCA CHAINE CHAINE .)
-    x               reduce using rule 16 (expr -> CONCA CHAINE CHAINE .)
-    -               reduce using rule 16 (expr -> CONCA CHAINE CHAINE .)
-    +               reduce using rule 16 (expr -> CONCA CHAINE CHAINE .)
-    $end            reduce using rule 16 (expr -> CONCA CHAINE CHAINE .)
-    NE              reduce using rule 16 (expr -> CONCA CHAINE CHAINE .)
-    GE              reduce using rule 16 (expr -> CONCA CHAINE CHAINE .)
-    PE              reduce using rule 16 (expr -> CONCA CHAINE CHAINE .)
-    EGL             reduce using rule 16 (expr -> CONCA CHAINE CHAINE .)
-    FLECHE          reduce using rule 16 (expr -> CONCA CHAINE CHAINE .)
-    SINON           reduce using rule 16 (expr -> CONCA CHAINE CHAINE .)
-    ALORS           reduce using rule 16 (expr -> CONCA CHAINE CHAINE .)
+    (6) statement -> SCRAPE URL CHAINE .
+    $end            reduce using rule 6 (statement -> SCRAPE URL CHAINE .)
+    )               reduce using rule 6 (statement -> SCRAPE URL CHAINE .)
+    SINON           reduce using rule 6 (statement -> SCRAPE URL CHAINE .)
 
 
 state 62
 
-    (5) statement -> FONC NOM ( ) . : statement
-    :               shift and go to state 69
+    (7) statement -> FONC NOM ( . NOM ) : statement
+    (8) statement -> FONC NOM ( . ) : statement
+    NOM             shift and go to state 75
+    )               shift and go to state 76
 
 
 state 63
 
-    (6) statement -> SI condition ALORS statement . SINON statement
-    SINON           shift and go to state 70
+    (9) statement -> TANTQUE condition ALORS . statement
+    (1) statement -> . params
+    (2) statement -> . expr
+    (3) statement -> . variable
+    (4) statement -> . NOM ( NOM )
+    (5) statement -> . NOM ( )
+    (6) statement -> . SCRAPE URL CHAINE
+    (7) statement -> . FONC NOM ( NOM ) : statement
+    (8) statement -> . FONC NOM ( ) : statement
+    (9) statement -> . TANTQUE condition ALORS statement
+    (10) statement -> . SI condition ALORS statement SINON statement
+    (11) statement -> . POUR variable FLECHE expr ALORS statement
+    (12) statement -> .
+    (13) params -> . ( )
+    (14) params -> . ( variable , statement )
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    (21) variable -> . NOM = CHAINE
+    (22) variable -> . NOM = expr
+    NOM             shift and go to state 5
+    SCRAPE          shift and go to state 7
+    FONC            shift and go to state 8
+    TANTQUE         shift and go to state 9
+    SI              shift and go to state 10
+    POUR            shift and go to state 11
+    $end            reduce using rule 12 (statement -> .)
+    )               reduce using rule 12 (statement -> .)
+    SINON           reduce using rule 12 (statement -> .)
+    (               shift and go to state 6
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
 
+    statement                      shift and go to state 77
+    params                         shift and go to state 2
+    expr                           shift and go to state 3
+    variable                       shift and go to state 4
 
 state 64
 
-    (30) condition -> expr NE expr .
-    (19) expr -> expr . < expr
-    (20) expr -> expr . > expr
-    (21) expr -> expr . % expr
-    (22) expr -> expr . ^ expr
-    (23) expr -> expr . / expr
-    (24) expr -> expr . * expr
-    (25) expr -> expr . x expr
-    (26) expr -> expr . - expr
-    (27) expr -> expr . + expr
-    ALORS           reduce using rule 30 (condition -> expr NE expr .)
-    <               shift and go to state 16
-    >               shift and go to state 17
-    %               shift and go to state 18
-    ^               shift and go to state 19
-    /               shift and go to state 20
-    *               shift and go to state 21
-    x               shift and go to state 22
-    -               shift and go to state 23
-    +               shift and go to state 24
+    (15) condition -> expr < . expr
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    (               shift and go to state 28
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    NOM             shift and go to state 37
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
 
+    expr                           shift and go to state 78
 
 state 65
 
-    (31) condition -> expr GE expr .
-    (19) expr -> expr . < expr
-    (20) expr -> expr . > expr
-    (21) expr -> expr . % expr
-    (22) expr -> expr . ^ expr
-    (23) expr -> expr . / expr
-    (24) expr -> expr . * expr
-    (25) expr -> expr . x expr
-    (26) expr -> expr . - expr
-    (27) expr -> expr . + expr
-    ALORS           reduce using rule 31 (condition -> expr GE expr .)
-    <               shift and go to state 16
-    >               shift and go to state 17
-    %               shift and go to state 18
-    ^               shift and go to state 19
-    /               shift and go to state 20
-    *               shift and go to state 21
-    x               shift and go to state 22
-    -               shift and go to state 23
-    +               shift and go to state 24
+    (16) condition -> expr > . expr
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    (               shift and go to state 28
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    NOM             shift and go to state 37
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
 
+    expr                           shift and go to state 79
 
 state 66
 
-    (32) condition -> expr PE expr .
-    (19) expr -> expr . < expr
-    (20) expr -> expr . > expr
-    (21) expr -> expr . % expr
-    (22) expr -> expr . ^ expr
-    (23) expr -> expr . / expr
-    (24) expr -> expr . * expr
-    (25) expr -> expr . x expr
-    (26) expr -> expr . - expr
-    (27) expr -> expr . + expr
-    ALORS           reduce using rule 32 (condition -> expr PE expr .)
-    <               shift and go to state 16
-    >               shift and go to state 17
-    %               shift and go to state 18
-    ^               shift and go to state 19
-    /               shift and go to state 20
-    *               shift and go to state 21
-    x               shift and go to state 22
-    -               shift and go to state 23
-    +               shift and go to state 24
+    (17) condition -> expr NE . expr
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    (               shift and go to state 28
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    NOM             shift and go to state 37
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
 
+    expr                           shift and go to state 80
 
 state 67
 
-    (33) condition -> expr EGL expr .
-    (19) expr -> expr . < expr
-    (20) expr -> expr . > expr
-    (21) expr -> expr . % expr
-    (22) expr -> expr . ^ expr
-    (23) expr -> expr . / expr
-    (24) expr -> expr . * expr
-    (25) expr -> expr . x expr
-    (26) expr -> expr . - expr
-    (27) expr -> expr . + expr
-    ALORS           reduce using rule 33 (condition -> expr EGL expr .)
-    <               shift and go to state 16
-    >               shift and go to state 17
-    %               shift and go to state 18
-    ^               shift and go to state 19
-    /               shift and go to state 20
-    *               shift and go to state 21
-    x               shift and go to state 22
-    -               shift and go to state 23
-    +               shift and go to state 24
+    (18) condition -> expr GE . expr
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    (               shift and go to state 28
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    NOM             shift and go to state 37
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
 
+    expr                           shift and go to state 81
 
 state 68
 
-    (7) statement -> POUR variable FLECHE expr . ALORS statement
-    (19) expr -> expr . < expr
-    (20) expr -> expr . > expr
-    (21) expr -> expr . % expr
-    (22) expr -> expr . ^ expr
-    (23) expr -> expr . / expr
-    (24) expr -> expr . * expr
-    (25) expr -> expr . x expr
-    (26) expr -> expr . - expr
-    (27) expr -> expr . + expr
-    ALORS           shift and go to state 71
-    <               shift and go to state 16
-    >               shift and go to state 17
-    %               shift and go to state 18
-    ^               shift and go to state 19
-    /               shift and go to state 20
-    *               shift and go to state 21
-    x               shift and go to state 22
-    -               shift and go to state 23
-    +               shift and go to state 24
+    (19) condition -> expr PE . expr
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    (               shift and go to state 28
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    NOM             shift and go to state 37
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
 
+    expr                           shift and go to state 82
 
 state 69
 
-    (5) statement -> FONC NOM ( ) : . statement
-    (1) statement -> . expr
-    (2) statement -> . variable
-    (3) statement -> . NOM ( )
-    (4) statement -> . SCRAPE URL CHAINE
-    (5) statement -> . FONC NOM ( ) : statement
-    (6) statement -> . SI condition ALORS statement SINON statement
-    (7) statement -> . POUR variable FLECHE expr ALORS statement
-    (8) statement -> .
-    (11) expr -> . FLOAT
-    (12) expr -> . NUM
-    (13) expr -> . NOM
-    (14) expr -> . DOUBLE expr
-    (15) expr -> . DOUBLE CHAINE
-    (16) expr -> . CONCA CHAINE CHAINE
-    (17) expr -> . ECRIS CHAINE
-    (18) expr -> . - expr
-    (19) expr -> . expr < expr
-    (20) expr -> . expr > expr
-    (21) expr -> . expr % expr
-    (22) expr -> . expr ^ expr
-    (23) expr -> . expr / expr
-    (24) expr -> . expr * expr
-    (25) expr -> . expr x expr
-    (26) expr -> . expr - expr
-    (27) expr -> . expr + expr
-    (28) expr -> . TYPE expr
-    (29) expr -> . TYPE CHAINE
-    (9) variable -> . NOM = CHAINE
-    (10) variable -> . NOM = expr
-    NOM             shift and go to state 4
-    SCRAPE          shift and go to state 5
-    FONC            shift and go to state 6
-    SI              shift and go to state 7
-    POUR            shift and go to state 8
-    $end            reduce using rule 8 (statement -> .)
-    SINON           reduce using rule 8 (statement -> .)
-    FLOAT           shift and go to state 9
-    NUM             shift and go to state 10
-    DOUBLE          shift and go to state 11
-    CONCA           shift and go to state 12
-    ECRIS           shift and go to state 13
-    -               shift and go to state 14
-    TYPE            shift and go to state 15
+    (20) condition -> expr EGL . expr
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    (               shift and go to state 28
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    NOM             shift and go to state 37
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
 
-    statement                      shift and go to state 72
-    expr                           shift and go to state 2
-    variable                       shift and go to state 3
+    expr                           shift and go to state 83
 
 state 70
 
-    (6) statement -> SI condition ALORS statement SINON . statement
-    (1) statement -> . expr
-    (2) statement -> . variable
-    (3) statement -> . NOM ( )
-    (4) statement -> . SCRAPE URL CHAINE
-    (5) statement -> . FONC NOM ( ) : statement
-    (6) statement -> . SI condition ALORS statement SINON statement
-    (7) statement -> . POUR variable FLECHE expr ALORS statement
-    (8) statement -> .
-    (11) expr -> . FLOAT
-    (12) expr -> . NUM
-    (13) expr -> . NOM
-    (14) expr -> . DOUBLE expr
-    (15) expr -> . DOUBLE CHAINE
-    (16) expr -> . CONCA CHAINE CHAINE
-    (17) expr -> . ECRIS CHAINE
-    (18) expr -> . - expr
-    (19) expr -> . expr < expr
-    (20) expr -> . expr > expr
-    (21) expr -> . expr % expr
-    (22) expr -> . expr ^ expr
-    (23) expr -> . expr / expr
-    (24) expr -> . expr * expr
-    (25) expr -> . expr x expr
-    (26) expr -> . expr - expr
-    (27) expr -> . expr + expr
-    (28) expr -> . TYPE expr
-    (29) expr -> . TYPE CHAINE
-    (9) variable -> . NOM = CHAINE
-    (10) variable -> . NOM = expr
-    NOM             shift and go to state 4
-    SCRAPE          shift and go to state 5
-    FONC            shift and go to state 6
-    SI              shift and go to state 7
-    POUR            shift and go to state 8
-    $end            reduce using rule 8 (statement -> .)
-    SINON           reduce using rule 8 (statement -> .)
-    FLOAT           shift and go to state 9
-    NUM             shift and go to state 10
-    DOUBLE          shift and go to state 11
-    CONCA           shift and go to state 12
-    ECRIS           shift and go to state 13
-    -               shift and go to state 14
-    TYPE            shift and go to state 15
+    (10) statement -> SI condition ALORS . statement SINON statement
+    (1) statement -> . params
+    (2) statement -> . expr
+    (3) statement -> . variable
+    (4) statement -> . NOM ( NOM )
+    (5) statement -> . NOM ( )
+    (6) statement -> . SCRAPE URL CHAINE
+    (7) statement -> . FONC NOM ( NOM ) : statement
+    (8) statement -> . FONC NOM ( ) : statement
+    (9) statement -> . TANTQUE condition ALORS statement
+    (10) statement -> . SI condition ALORS statement SINON statement
+    (11) statement -> . POUR variable FLECHE expr ALORS statement
+    (12) statement -> .
+    (13) params -> . ( )
+    (14) params -> . ( variable , statement )
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    (21) variable -> . NOM = CHAINE
+    (22) variable -> . NOM = expr
+    NOM             shift and go to state 5
+    SCRAPE          shift and go to state 7
+    FONC            shift and go to state 8
+    TANTQUE         shift and go to state 9
+    SI              shift and go to state 10
+    POUR            shift and go to state 11
+    SINON           reduce using rule 12 (statement -> .)
+    (               shift and go to state 6
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
 
-    statement                      shift and go to state 73
-    expr                           shift and go to state 2
-    variable                       shift and go to state 3
+    statement                      shift and go to state 84
+    params                         shift and go to state 2
+    expr                           shift and go to state 3
+    variable                       shift and go to state 4
 
 state 71
 
-    (7) statement -> POUR variable FLECHE expr ALORS . statement
-    (1) statement -> . expr
-    (2) statement -> . variable
-    (3) statement -> . NOM ( )
-    (4) statement -> . SCRAPE URL CHAINE
-    (5) statement -> . FONC NOM ( ) : statement
-    (6) statement -> . SI condition ALORS statement SINON statement
-    (7) statement -> . POUR variable FLECHE expr ALORS statement
-    (8) statement -> .
-    (11) expr -> . FLOAT
-    (12) expr -> . NUM
-    (13) expr -> . NOM
-    (14) expr -> . DOUBLE expr
-    (15) expr -> . DOUBLE CHAINE
-    (16) expr -> . CONCA CHAINE CHAINE
-    (17) expr -> . ECRIS CHAINE
-    (18) expr -> . - expr
-    (19) expr -> . expr < expr
-    (20) expr -> . expr > expr
-    (21) expr -> . expr % expr
-    (22) expr -> . expr ^ expr
-    (23) expr -> . expr / expr
-    (24) expr -> . expr * expr
-    (25) expr -> . expr x expr
-    (26) expr -> . expr - expr
-    (27) expr -> . expr + expr
-    (28) expr -> . TYPE expr
-    (29) expr -> . TYPE CHAINE
-    (9) variable -> . NOM = CHAINE
-    (10) variable -> . NOM = expr
-    NOM             shift and go to state 4
-    SCRAPE          shift and go to state 5
-    FONC            shift and go to state 6
-    SI              shift and go to state 7
-    POUR            shift and go to state 8
-    $end            reduce using rule 8 (statement -> .)
-    SINON           reduce using rule 8 (statement -> .)
-    FLOAT           shift and go to state 9
-    NUM             shift and go to state 10
-    DOUBLE          shift and go to state 11
-    CONCA           shift and go to state 12
-    ECRIS           shift and go to state 13
-    -               shift and go to state 14
-    TYPE            shift and go to state 15
+    (11) statement -> POUR variable FLECHE . expr ALORS statement
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    (               shift and go to state 28
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    NOM             shift and go to state 37
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
 
-    variable                       shift and go to state 3
-    expr                           shift and go to state 2
-    statement                      shift and go to state 74
+    expr                           shift and go to state 85
 
 state 72
 
-    (5) statement -> FONC NOM ( ) : statement .
-    $end            reduce using rule 5 (statement -> FONC NOM ( ) : statement .)
-    SINON           reduce using rule 5 (statement -> FONC NOM ( ) : statement .)
+    (29) expr -> CONCA CHAINE CHAINE .
+    %               reduce using rule 29 (expr -> CONCA CHAINE CHAINE .)
+    ^               reduce using rule 29 (expr -> CONCA CHAINE CHAINE .)
+    /               reduce using rule 29 (expr -> CONCA CHAINE CHAINE .)
+    *               reduce using rule 29 (expr -> CONCA CHAINE CHAINE .)
+    x               reduce using rule 29 (expr -> CONCA CHAINE CHAINE .)
+    -               reduce using rule 29 (expr -> CONCA CHAINE CHAINE .)
+    +               reduce using rule 29 (expr -> CONCA CHAINE CHAINE .)
+    $end            reduce using rule 29 (expr -> CONCA CHAINE CHAINE .)
+    )               reduce using rule 29 (expr -> CONCA CHAINE CHAINE .)
+    <               reduce using rule 29 (expr -> CONCA CHAINE CHAINE .)
+    >               reduce using rule 29 (expr -> CONCA CHAINE CHAINE .)
+    NE              reduce using rule 29 (expr -> CONCA CHAINE CHAINE .)
+    GE              reduce using rule 29 (expr -> CONCA CHAINE CHAINE .)
+    PE              reduce using rule 29 (expr -> CONCA CHAINE CHAINE .)
+    EGL             reduce using rule 29 (expr -> CONCA CHAINE CHAINE .)
+    ,               reduce using rule 29 (expr -> CONCA CHAINE CHAINE .)
+    FLECHE          reduce using rule 29 (expr -> CONCA CHAINE CHAINE .)
+    SINON           reduce using rule 29 (expr -> CONCA CHAINE CHAINE .)
+    ALORS           reduce using rule 29 (expr -> CONCA CHAINE CHAINE .)
 
 
 state 73
 
-    (6) statement -> SI condition ALORS statement SINON statement .
-    $end            reduce using rule 6 (statement -> SI condition ALORS statement SINON statement .)
-    SINON           reduce using rule 6 (statement -> SI condition ALORS statement SINON statement .)
+    (4) statement -> NOM ( NOM ) .
+    $end            reduce using rule 4 (statement -> NOM ( NOM ) .)
+    )               reduce using rule 4 (statement -> NOM ( NOM ) .)
+    SINON           reduce using rule 4 (statement -> NOM ( NOM ) .)
 
 
 state 74
 
-    (7) statement -> POUR variable FLECHE expr ALORS statement .
-    $end            reduce using rule 7 (statement -> POUR variable FLECHE expr ALORS statement .)
-    SINON           reduce using rule 7 (statement -> POUR variable FLECHE expr ALORS statement .)
+    (14) params -> ( variable , statement . )
+    )               shift and go to state 86
+
+
+state 75
+
+    (7) statement -> FONC NOM ( NOM . ) : statement
+    )               shift and go to state 87
+
+
+state 76
+
+    (8) statement -> FONC NOM ( ) . : statement
+    :               shift and go to state 88
+
+
+state 77
+
+    (9) statement -> TANTQUE condition ALORS statement .
+    $end            reduce using rule 9 (statement -> TANTQUE condition ALORS statement .)
+    )               reduce using rule 9 (statement -> TANTQUE condition ALORS statement .)
+    SINON           reduce using rule 9 (statement -> TANTQUE condition ALORS statement .)
+
+
+state 78
+
+    (15) condition -> expr < expr .
+    (32) expr -> expr . % expr
+    (33) expr -> expr . ^ expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . x expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    ALORS           reduce using rule 15 (condition -> expr < expr .)
+    %               shift and go to state 19
+    ^               shift and go to state 20
+    /               shift and go to state 21
+    *               shift and go to state 22
+    x               shift and go to state 23
+    -               shift and go to state 24
+    +               shift and go to state 25
+
+
+state 79
+
+    (16) condition -> expr > expr .
+    (32) expr -> expr . % expr
+    (33) expr -> expr . ^ expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . x expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    ALORS           reduce using rule 16 (condition -> expr > expr .)
+    %               shift and go to state 19
+    ^               shift and go to state 20
+    /               shift and go to state 21
+    *               shift and go to state 22
+    x               shift and go to state 23
+    -               shift and go to state 24
+    +               shift and go to state 25
+
+
+state 80
+
+    (17) condition -> expr NE expr .
+    (32) expr -> expr . % expr
+    (33) expr -> expr . ^ expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . x expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    ALORS           reduce using rule 17 (condition -> expr NE expr .)
+    %               shift and go to state 19
+    ^               shift and go to state 20
+    /               shift and go to state 21
+    *               shift and go to state 22
+    x               shift and go to state 23
+    -               shift and go to state 24
+    +               shift and go to state 25
+
+
+state 81
+
+    (18) condition -> expr GE expr .
+    (32) expr -> expr . % expr
+    (33) expr -> expr . ^ expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . x expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    ALORS           reduce using rule 18 (condition -> expr GE expr .)
+    %               shift and go to state 19
+    ^               shift and go to state 20
+    /               shift and go to state 21
+    *               shift and go to state 22
+    x               shift and go to state 23
+    -               shift and go to state 24
+    +               shift and go to state 25
+
+
+state 82
+
+    (19) condition -> expr PE expr .
+    (32) expr -> expr . % expr
+    (33) expr -> expr . ^ expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . x expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    ALORS           reduce using rule 19 (condition -> expr PE expr .)
+    %               shift and go to state 19
+    ^               shift and go to state 20
+    /               shift and go to state 21
+    *               shift and go to state 22
+    x               shift and go to state 23
+    -               shift and go to state 24
+    +               shift and go to state 25
+
+
+state 83
+
+    (20) condition -> expr EGL expr .
+    (32) expr -> expr . % expr
+    (33) expr -> expr . ^ expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . x expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    ALORS           reduce using rule 20 (condition -> expr EGL expr .)
+    %               shift and go to state 19
+    ^               shift and go to state 20
+    /               shift and go to state 21
+    *               shift and go to state 22
+    x               shift and go to state 23
+    -               shift and go to state 24
+    +               shift and go to state 25
+
+
+state 84
+
+    (10) statement -> SI condition ALORS statement . SINON statement
+    SINON           shift and go to state 89
+
+
+state 85
+
+    (11) statement -> POUR variable FLECHE expr . ALORS statement
+    (32) expr -> expr . % expr
+    (33) expr -> expr . ^ expr
+    (34) expr -> expr . / expr
+    (35) expr -> expr . * expr
+    (36) expr -> expr . x expr
+    (37) expr -> expr . - expr
+    (38) expr -> expr . + expr
+    ALORS           shift and go to state 90
+    %               shift and go to state 19
+    ^               shift and go to state 20
+    /               shift and go to state 21
+    *               shift and go to state 22
+    x               shift and go to state 23
+    -               shift and go to state 24
+    +               shift and go to state 25
+
+
+state 86
+
+    (14) params -> ( variable , statement ) .
+    $end            reduce using rule 14 (params -> ( variable , statement ) .)
+    )               reduce using rule 14 (params -> ( variable , statement ) .)
+    SINON           reduce using rule 14 (params -> ( variable , statement ) .)
+
+
+state 87
+
+    (7) statement -> FONC NOM ( NOM ) . : statement
+    :               shift and go to state 91
+
+
+state 88
+
+    (8) statement -> FONC NOM ( ) : . statement
+    (1) statement -> . params
+    (2) statement -> . expr
+    (3) statement -> . variable
+    (4) statement -> . NOM ( NOM )
+    (5) statement -> . NOM ( )
+    (6) statement -> . SCRAPE URL CHAINE
+    (7) statement -> . FONC NOM ( NOM ) : statement
+    (8) statement -> . FONC NOM ( ) : statement
+    (9) statement -> . TANTQUE condition ALORS statement
+    (10) statement -> . SI condition ALORS statement SINON statement
+    (11) statement -> . POUR variable FLECHE expr ALORS statement
+    (12) statement -> .
+    (13) params -> . ( )
+    (14) params -> . ( variable , statement )
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    (21) variable -> . NOM = CHAINE
+    (22) variable -> . NOM = expr
+    NOM             shift and go to state 5
+    SCRAPE          shift and go to state 7
+    FONC            shift and go to state 8
+    TANTQUE         shift and go to state 9
+    SI              shift and go to state 10
+    POUR            shift and go to state 11
+    $end            reduce using rule 12 (statement -> .)
+    )               reduce using rule 12 (statement -> .)
+    SINON           reduce using rule 12 (statement -> .)
+    (               shift and go to state 6
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
+
+    statement                      shift and go to state 92
+    params                         shift and go to state 2
+    expr                           shift and go to state 3
+    variable                       shift and go to state 4
+
+state 89
+
+    (10) statement -> SI condition ALORS statement SINON . statement
+    (1) statement -> . params
+    (2) statement -> . expr
+    (3) statement -> . variable
+    (4) statement -> . NOM ( NOM )
+    (5) statement -> . NOM ( )
+    (6) statement -> . SCRAPE URL CHAINE
+    (7) statement -> . FONC NOM ( NOM ) : statement
+    (8) statement -> . FONC NOM ( ) : statement
+    (9) statement -> . TANTQUE condition ALORS statement
+    (10) statement -> . SI condition ALORS statement SINON statement
+    (11) statement -> . POUR variable FLECHE expr ALORS statement
+    (12) statement -> .
+    (13) params -> . ( )
+    (14) params -> . ( variable , statement )
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    (21) variable -> . NOM = CHAINE
+    (22) variable -> . NOM = expr
+    NOM             shift and go to state 5
+    SCRAPE          shift and go to state 7
+    FONC            shift and go to state 8
+    TANTQUE         shift and go to state 9
+    SI              shift and go to state 10
+    POUR            shift and go to state 11
+    $end            reduce using rule 12 (statement -> .)
+    )               reduce using rule 12 (statement -> .)
+    SINON           reduce using rule 12 (statement -> .)
+    (               shift and go to state 6
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
+
+    statement                      shift and go to state 93
+    params                         shift and go to state 2
+    expr                           shift and go to state 3
+    variable                       shift and go to state 4
+
+state 90
+
+    (11) statement -> POUR variable FLECHE expr ALORS . statement
+    (1) statement -> . params
+    (2) statement -> . expr
+    (3) statement -> . variable
+    (4) statement -> . NOM ( NOM )
+    (5) statement -> . NOM ( )
+    (6) statement -> . SCRAPE URL CHAINE
+    (7) statement -> . FONC NOM ( NOM ) : statement
+    (8) statement -> . FONC NOM ( ) : statement
+    (9) statement -> . TANTQUE condition ALORS statement
+    (10) statement -> . SI condition ALORS statement SINON statement
+    (11) statement -> . POUR variable FLECHE expr ALORS statement
+    (12) statement -> .
+    (13) params -> . ( )
+    (14) params -> . ( variable , statement )
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    (21) variable -> . NOM = CHAINE
+    (22) variable -> . NOM = expr
+    NOM             shift and go to state 5
+    SCRAPE          shift and go to state 7
+    FONC            shift and go to state 8
+    TANTQUE         shift and go to state 9
+    SI              shift and go to state 10
+    POUR            shift and go to state 11
+    $end            reduce using rule 12 (statement -> .)
+    )               reduce using rule 12 (statement -> .)
+    SINON           reduce using rule 12 (statement -> .)
+    (               shift and go to state 6
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
+
+    variable                       shift and go to state 4
+    expr                           shift and go to state 3
+    statement                      shift and go to state 94
+    params                         shift and go to state 2
+
+state 91
+
+    (7) statement -> FONC NOM ( NOM ) : . statement
+    (1) statement -> . params
+    (2) statement -> . expr
+    (3) statement -> . variable
+    (4) statement -> . NOM ( NOM )
+    (5) statement -> . NOM ( )
+    (6) statement -> . SCRAPE URL CHAINE
+    (7) statement -> . FONC NOM ( NOM ) : statement
+    (8) statement -> . FONC NOM ( ) : statement
+    (9) statement -> . TANTQUE condition ALORS statement
+    (10) statement -> . SI condition ALORS statement SINON statement
+    (11) statement -> . POUR variable FLECHE expr ALORS statement
+    (12) statement -> .
+    (13) params -> . ( )
+    (14) params -> . ( variable , statement )
+    (23) expr -> . ( expr )
+    (24) expr -> . FLOAT
+    (25) expr -> . NUM
+    (26) expr -> . NOM
+    (27) expr -> . DOUBLE expr
+    (28) expr -> . DOUBLE CHAINE
+    (29) expr -> . CONCA CHAINE CHAINE
+    (30) expr -> . ECRIS CHAINE
+    (31) expr -> . - expr
+    (32) expr -> . expr % expr
+    (33) expr -> . expr ^ expr
+    (34) expr -> . expr / expr
+    (35) expr -> . expr * expr
+    (36) expr -> . expr x expr
+    (37) expr -> . expr - expr
+    (38) expr -> . expr + expr
+    (39) expr -> . TYPE expr
+    (40) expr -> . TYPE CHAINE
+    (21) variable -> . NOM = CHAINE
+    (22) variable -> . NOM = expr
+    NOM             shift and go to state 5
+    SCRAPE          shift and go to state 7
+    FONC            shift and go to state 8
+    TANTQUE         shift and go to state 9
+    SI              shift and go to state 10
+    POUR            shift and go to state 11
+    $end            reduce using rule 12 (statement -> .)
+    )               reduce using rule 12 (statement -> .)
+    SINON           reduce using rule 12 (statement -> .)
+    (               shift and go to state 6
+    FLOAT           shift and go to state 12
+    NUM             shift and go to state 13
+    DOUBLE          shift and go to state 14
+    CONCA           shift and go to state 15
+    ECRIS           shift and go to state 16
+    -               shift and go to state 17
+    TYPE            shift and go to state 18
+
+    statement                      shift and go to state 95
+    params                         shift and go to state 2
+    expr                           shift and go to state 3
+    variable                       shift and go to state 4
+
+state 92
+
+    (8) statement -> FONC NOM ( ) : statement .
+    $end            reduce using rule 8 (statement -> FONC NOM ( ) : statement .)
+    )               reduce using rule 8 (statement -> FONC NOM ( ) : statement .)
+    SINON           reduce using rule 8 (statement -> FONC NOM ( ) : statement .)
+
+
+state 93
+
+    (10) statement -> SI condition ALORS statement SINON statement .
+    $end            reduce using rule 10 (statement -> SI condition ALORS statement SINON statement .)
+    )               reduce using rule 10 (statement -> SI condition ALORS statement SINON statement .)
+    SINON           reduce using rule 10 (statement -> SI condition ALORS statement SINON statement .)
+
+
+state 94
+
+    (11) statement -> POUR variable FLECHE expr ALORS statement .
+    $end            reduce using rule 11 (statement -> POUR variable FLECHE expr ALORS statement .)
+    )               reduce using rule 11 (statement -> POUR variable FLECHE expr ALORS statement .)
+    SINON           reduce using rule 11 (statement -> POUR variable FLECHE expr ALORS statement .)
+
+
+state 95
+
+    (7) statement -> FONC NOM ( NOM ) : statement .
+    $end            reduce using rule 7 (statement -> FONC NOM ( NOM ) : statement .)
+    )               reduce using rule 7 (statement -> FONC NOM ( NOM ) : statement .)
+    SINON           reduce using rule 7 (statement -> FONC NOM ( NOM ) : statement .)
