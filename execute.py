@@ -15,6 +15,7 @@ from myparser import MyParser
 from urllib.request import *
 from bs4 import BeautifulSoup
 import requests
+import re
 import pandas as pd
 from datetime import datetime
 
@@ -71,9 +72,9 @@ class Execute:
             return self.traverse(node[1]) ** self.traverse(node[2])
         # traitement des opérateurs de comparaisons litéraux
         elif node[0] == '>':
-            return self.traverse(node[1]) ** self.traverse(node[2])
+            return self.traverse(node[1]) > self.traverse(node[2])
         elif node[0] == '<':
-            return self.traverse(node[1]) ** self.traverse(node[2])
+            return self.traverse(node[1]) < self.traverse(node[2])
         # traitement des autre opérateurs de comparaisons
         if node[0] == '==':
             return self.traverse(node[1]) <= self.traverse(node[2])
@@ -83,6 +84,7 @@ class Execute:
             return self.traverse(node[1]) != self.traverse(node[2])
         if node[0] == '==':
             return self.traverse(node[1]) == self.traverse(node[2])
+
 
         if node[0] == 'if_stmt':
             result = self.traverse(node[1]) # execute la condition et garde son résultat
@@ -98,45 +100,18 @@ class Execute:
 
 
         if node[0] == 'fun_call':
-            if node[2]: # présence d'un paramètre
                 try:
-                    self.traverse(node[2]) # executer la variable
                     return self.traverse(self.env[node[1]])
                 except LookupError:
                     print("la fonction %s est indéfinie" % node[1])
-                    return 0
-            else:
-                return self.traverse(self.env[node[1]])
+                    return
+        if node[0] == 'fun_call_params':# cas fonction sans paramètres
+                try:
+                    self.traverse(node[2]) # executer la variable
+                    return self.traverse(self.env[node[1]]) # executer la fonction
+                except LookupError:
+                    print("la fonction %s est indéfinie" % node[1])
 
-
-        if node[0] == 'SCRP':
-            try:
-                html = requests.get(self.traverse(node[1]))
-            except Exception as e:
-                print(str(e))
-            else:
-                res = BeautifulSoup(html.text, "html.parser")
-                table = res.find_all('table')
-                raw_data = [row.text.splitlines() for row in table]
-                raw_data = raw_data[:-9]
-                for i in range(len(raw_data)):
-                    raw_data[i] = raw_data[i][2:len(raw_data[i]):3]
-                print(raw_data)
-                #print(res)
-                #tag = 'res.%s.getText()' %self.traverse(node[2])[1:-1]
-                """if tag is None :
-                    print("Tag not found")
-                else:
-                    print(eval(tag))"""
-
-
-        if node[0]== 'meteo':
-            Dates_r = pd.date_range(start= '1/1/2009', end = '08 / 05 / 2020', freq = 'M')
-            dates = [str(i)[:4] + str(i)[5:7] for i in Dates_r]
-            dates = dates[0:5]
-            for k in range(len(dates)):
-                url = "http://www.estesparkweather.net/archive_reports.php?date="
-                url += dates[k]
 
         # traitement de l'opération echo
         elif node[0] == 'ecr':
@@ -180,6 +155,28 @@ class Execute:
 
         if node[0] == 'for_loop_setup':
             return self.traverse(node[1]), self.traverse(node[2])
+
+
+        if node[0] == 'occur':
+            try:
+                html = requests.get(self.traverse(node[1]))
+            except Exception as e:
+                print(str(e))
+            else:
+                soup = BeautifulSoup(html.text, 'xml')
+                results = soup.find_all(string=re.compile('.*{0}.*'.format("proposition")))
+                print("le mot %s a été trouvé %d fois\n" %(self.traverse(node[2]), len(results)))
+
+
+
+
+
+
+
+
+
+
+
 
 
 

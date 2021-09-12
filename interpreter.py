@@ -15,13 +15,17 @@ if __name__ == '__main__':
         if text:
             try:
                 tree = parser.parse(lexer.tokenize(text))
-                print(tree)
-            except TypeError as err:
-                raise ParseError(repr(err))
+            except (AttributeError) as err:
+                print(repr(err))
+                continue
             try:
                 Execute(tree, env)
-            except TypeError as err:
+            except (ZeroDivisionError,IndexError) as err:
                 print(repr(err))
+                continue
+            except:
+                print("erreur innatendue")
+                continue
 
     """text='si a == 2 alors a= 2*a sinon a= 5'
     tree= parser.parse(lexer.tokenize(text))
