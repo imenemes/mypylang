@@ -13,5 +13,5 @@ requests==2.26.0
 six==1.15.0
 sly==0.4
 soupsieve==2.2.1
-urllib3==1.26.4
+urllib3==1.26.5
 webencodings==0.5.1
