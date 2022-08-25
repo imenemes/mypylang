@@ -7,7 +7,7 @@ if __name__ == '__main__':
     lexer = MyLexer()
     parser = MyParser()
     env = {}
-    """while True:
+    while True:
         try:
             text = input('mypy> ')
         except EOFError:
@@ -25,9 +25,4 @@ if __name__ == '__main__':
                 continue
             except:
                 print("erreur innatendue")
-                continue"""
-
-    text='occur https://fr.wikipedia.org/wiki/D%C3%A9finition "proposition"'
-    tree= parser.parse(lexer.tokenize(text))
-    print(tree)
-    Execute(tree, env)
+                continue
