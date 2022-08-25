@@ -6,13 +6,13 @@ class MyLexer(Lexer):
     # déclarer une liste de TOKENS
     tokens = {NOM, NUM, CHAINE, ECRIS, CONCA,TANTQUE,
               DOUBLE, FLOAT, TYPE, SI, ALORS,
-              SINON, EGL, FONC, POUR, FLECHE, SCRAPE, URL,PE,GE,NE}
+              SINON, EGL, FONC, POUR, FLECHE, OCCUR, URL,PE,GE,NE}
 
     # litéral ingoré
     ignore = '\t\n '
 
     # litéraux d'un caractères
-    literals = {'=', '+', '-', '/', 'x','*', '^', '(', ')', '%', ':', ',', ';','>','<'}
+    literals = {'=', '+', '-', '/', 'x','*', '^', '(', ')', '%', ':', ',', ';','>','<','&','|'}
 
     # Definir les tokens par des regex
     # l'ordre est important le premier regex qui match sera utilisé
@@ -39,7 +39,7 @@ class MyLexer(Lexer):
     NOM['alors'] = ALORS
     NOM['fonc'] = FONC
     NOM['pour'] = POUR
-    NOM['scrap'] = SCRAPE
+    NOM['occur'] = OCCUR
     NOM['ecris'] = ECRIS
     NOM['type'] = TYPE
     NOM['double'] = DOUBLE

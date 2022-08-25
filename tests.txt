@@ -1,0 +1,49 @@
+TEST N. 0
+9
+TEST N. 1
+8
+TEST N. 2
+6
+TEST N. 3
+3.0
+TEST N. 4
+la variable bb indéfinie
+TEST N. 5
+le mot "proposition" a été trouvé 7 fois
+
+TEST N. 6
+TEST N. 7
+TEST N. 8
+"test réussi"
+TEST N. 9
+"sss"
+TEST N. 10
+TEST N. 11
+2
+TEST N. 12
+TEST N. 13
+4
+TEST N. 14
+<class 'str'>
+TEST N. 15
+<class 'int'>
+TEST N. 16
+4
+6
+8
+TEST N. 17
+"bonjouR"
+TEST N. 18
+ZeroDivisionError('division by zero')
+TEST N. 19
+TEST N. 20
+Syntax error at EOF
+TEST N. 21
+4
+TEST N. 22
+6
+TEST N. 23
+erreur de syntaxe au token a
+4
+TEST N. 24
+"bonjour"

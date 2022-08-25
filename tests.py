@@ -12,11 +12,12 @@ progs = [
 "8-2",#2
 "6/2",#3
 "ecris bb",#4
-"""scrap https://weather.com/fr-FR/temps/10jours/l/1975528fb7e3553b7eacfe7ac89b421986bb9949c2506b144b4e228d57da124b "p" """,#5
+"""occur https://fr.wikipedia.org/wiki/D%C3%A9finition "proposition" """,#5
+"""occur  https://fr.wikipedia.org/wiki/Scolastique "scolastique" """,#25
 'fonc prg(): ecris "test réussi" #khjhgjfkhgkj*/;',#6
-'fonc prg2(B): ecris "sss" #khjhgjfkhgkj*/;',#7
+'fonc prg2(B): ecris "sss"',#7
 "prg()",#8
-"prg2(B)",#9
+"prg2(B=2)",#9
 "a = 2",#10
 "a",#11
 """si a == 2 alors b= 2*a 
@@ -32,9 +33,14 @@ conca "bon" "jouR"
 """,#17
 "5/0",#18
 "a=2",
-"si a < 2 alors b= 2*a sinon",
+"si a < 2 alors b= 2*a ",
 "b",
-"double 3"
+"double 3",
+"conca a b",
+"""ecris conca "bon" "jour" """
+
+
+
 
 
 
@@ -43,6 +49,7 @@ for i, prgm in enumerate(progs):
     print('TEST N. {}'.format(i))
     try:
         tree = parser.parse(lexer.tokenize(prgm))
+        #print(tree)
     except (AttributeError,ZeroDivisionError) as err:
         print(repr(err))
         continue
@@ -51,8 +58,6 @@ for i, prgm in enumerate(progs):
     except ZeroDivisionError as err:
          print(repr(err))
          continue
-    except:
-        print("Unexpected error %s", tree)
-        continue
+
 
 

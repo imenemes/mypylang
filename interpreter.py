@@ -7,7 +7,7 @@ if __name__ == '__main__':
     lexer = MyLexer()
     parser = MyParser()
     env = {}
-    while True:
+    """while True:
         try:
             text = input('mypy> ')
         except EOFError:
@@ -15,15 +15,19 @@ if __name__ == '__main__':
         if text:
             try:
                 tree = parser.parse(lexer.tokenize(text))
-                print(tree)
-            except TypeError as err:
-                raise ParseError(repr(err))
+            except (AttributeError) as err:
+                print(repr(err))
+                continue
             try:
                 Execute(tree, env)
-            except TypeError as err:
+            except (ZeroDivisionError,IndexError) as err:
                 print(repr(err))
+                continue
+            except:
+                print("erreur innatendue")
+                continue"""
 
-    """text='si a == 2 alors a= 2*a sinon a= 5'
+    text='occur https://fr.wikipedia.org/wiki/D%C3%A9finition "proposition"'
     tree= parser.parse(lexer.tokenize(text))
     print(tree)
-    Execute(tree, env)"""
+    Execute(tree, env)

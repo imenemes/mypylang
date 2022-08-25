@@ -13,7 +13,7 @@ class MyParser(Parser):
 
     precedence = (
         ('nonassoc', '<', 'PE', '>', 'GE','EGL', 'NE','TANTQUE'),
-        ('nonassoc', 'SCRAPE','CONCA', 'DOUBLE','ECRIS'),
+        ('nonassoc', 'OCCUR','CONCA', 'DOUBLE','ECRIS'),
         ('left', '+', '-',"TYPE"),
         ('left', '*', '/', '%','x' ),
         ('right', '^'),
@@ -52,9 +52,9 @@ class MyParser(Parser):
     def statement(self, p):
         return 'fun_def', p.NOM0, ('parm', p.NOM1, p.statement)
 
-    @_('SCRAPE URL CHAINE')
+    @_('OCCUR URL CHAINE')
     def statement(self, p):
-        return 'SCRP', p.URL, p.CHAINE
+        return 'occur', p.URL, p.CHAINE
 
     @_('NOM "("  ")"')
     def statement(self, p):
@@ -62,7 +62,7 @@ class MyParser(Parser):
 
     @_('NOM "(" variable ")"')
     def statement(self, p):
-        return 'fun_call', p.NOM, p.variable
+        return 'fun_call_params', p.NOM, p.variable
 
     @_('variable')
     def statement(self, p):
@@ -71,18 +71,6 @@ class MyParser(Parser):
     @_('expr')
     def statement(self, p):
         return p.expr
-
-    @_('"(" variable "," statement ")"')
-    def params(self, p):
-        return p.variable
-
-    @_('"("  ")"')
-    def params(self, p):
-        return
-
-    @_('params')
-    def statement(self, p):
-        return p.params
 
     @_('expr EGL expr',
        'expr PE expr',
@@ -155,7 +143,6 @@ class MyParser(Parser):
     def error(self, p):
         if p:
             print(Fore.BLUE + "erreur de syntaxe au token", str(p.value) + Style.RESET_ALL)
-
         else:
             print("Syntax error at EOF")
 
