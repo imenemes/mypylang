@@ -1,8 +1,11 @@
-from setuptools import setup
+#!/usr/bin/env python
+
+from distutils.core import setup
+
 
 setup(name='mypy',
       version='0.2',
-      description='langage minimale',
+      description='langage minimal',
       url='https://github.com/imenmes/mypylang',
       author='Flying Circus',
       author_email='imen.mes@gmail.com',
