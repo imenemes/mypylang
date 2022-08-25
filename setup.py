@@ -4,7 +4,7 @@ from distutils.core import setup
 
 
 setup(name='mypy',
-      version='0.2',
+      version='0.3',
       description='langage minimal',
       url='https://github.com/imenmes/mypylang',
       author='Flying Circus',
