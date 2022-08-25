@@ -1,7 +1,7 @@
 from setuptools import setup
 
-setup(name='mypylang',
-      version='0.1',
+setup(name='mypy',
+      version='0.2',
       description='langage minimale',
       url='https://github.com/imenmes/mypylang',
       author='Flying Circus',
