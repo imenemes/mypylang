@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 
-setup(name='mypy',
+setup(name='mypylang',
       version='0.3',
       description='langage minimal',
       url='https://github.com/imenmes/mypylang',
