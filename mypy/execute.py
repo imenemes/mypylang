@@ -9,10 +9,7 @@
 # Usage :  : vous aurez un prompt mypy>  vous pourrez faire des opérations arithmtiques et quelques commandes en français
 # ********************************************************
 
-
-from myparser import MyParser
-
-from urllib.request import *
+from mypy.myparser import MyParser
 from bs4 import BeautifulSoup
 import requests
 import re

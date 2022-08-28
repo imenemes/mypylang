@@ -1,9 +1,10 @@
-from execute import *
-from mylexer import MyLexer
-from mypy_errors import Error,ParseError
+#!/usr/bin/env python3
 
+from mypy.execute import *
+from mypy.mylexer import MyLexer
+from mypy.mypy_errors import Error,ParseError
 
-if __name__ == '__main__':
+def main():
     lexer = MyLexer()
     parser = MyParser()
     env = {}
@@ -15,7 +16,7 @@ if __name__ == '__main__':
         if text:
             try:
                 tree = parser.parse(lexer.tokenize(text))
-            except (AttributeError) as err:
+            except(AttributeError) as err:
                 print(repr(err))
                 continue
             try:
@@ -26,3 +27,7 @@ if __name__ == '__main__':
             except:
                 print("erreur innatendue")
                 continue
+
+
+    if __name__ == "__main__":
+        main()

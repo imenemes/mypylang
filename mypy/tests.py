@@ -1,7 +1,7 @@
-from mylexer import MyLexer
-from myparser import MyParser
-from execute import Execute
-from mypy_errors import Error,ParseError
+from mypy.mylexer import MyLexer
+from mypy.myparser import MyParser
+from mypy.execute import Execute
+from mypy.mypy_errors import Error,ParseError
 lexer = MyLexer()
 parser = MyParser()
 env = {}

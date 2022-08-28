@@ -1,8 +1,6 @@
 from sly import Parser
 
-from mylexer import MyLexer
-from mypy_errors import ParseError
-import colorama
+from mypy.mylexer import MyLexer
 from colorama import Fore,Style
 
 
