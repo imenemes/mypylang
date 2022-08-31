@@ -1,10 +1,12 @@
-from mypy.mylexer import MyLexer
-from mypy.myparser import MyParser
-from mypy.execute import Execute
-from mypy.mypy_errors import Error,ParseError
+from .mylexer import MyLexer
+from .myparser import MyParser
+from .execute import Execute
+from .mypy_errors import Error,ParseError
+
 lexer = MyLexer()
 parser = MyParser()
 env = {}
+
 progs = [
 #...
 "5+4",#0
@@ -37,7 +39,8 @@ conca "bon" "jouR"
 "b",
 "double 3",
 "conca a b",
-"""ecris conca "bon" "jour" """
+"""ecris conca "bon" "jour" """,
+"quit"
 
 
 

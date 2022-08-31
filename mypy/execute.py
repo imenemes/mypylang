@@ -2,14 +2,14 @@
 # Nom ......... : mypy.py
 # Rôle ........ : langage avec commandes en français
 # Auteur ...... : Imen L'Hocine
-# Version ..... : V0.1 du 19/02/2021
-# Licence ..... : réalisé dans le cadre du cours de C&I L3/chapitre 10
+# Version ..... : V0.2 du 28/08/2022
+# Licence ..... : réalisé dans le cadre du cours de C&I L3/chapitre 10 et logiciels libres L3
 # (../..)
 # Pour exécuter : python3 mypy.py
 # Usage :  : vous aurez un prompt mypy>  vous pourrez faire des opérations arithmtiques et quelques commandes en français
 # ********************************************************
 
-from mypy.myparser import MyParser
+from .myparser import MyParser
 from bs4 import BeautifulSoup
 import requests
 import re

@@ -1,6 +1,6 @@
 from sly import Parser
-
-from mypy.mylexer import MyLexer
+import sys
+from .mylexer import MyLexer
 from colorama import Fore,Style
 
 
@@ -11,7 +11,7 @@ class MyParser(Parser):
 
     precedence = (
         ('nonassoc', '<', 'PE', '>', 'GE','EGL', 'NE','TANTQUE'),
-        ('nonassoc', 'OCCUR','CONCA', 'DOUBLE','ECRIS'),
+        ('nonassoc', 'OCCUR','CONCA', 'DOUBLE','ECRIS', 'QUIT'),
         ('left', '+', '-',"TYPE"),
         ('left', '*', '/', '%','x' ),
         ('right', '^'),
@@ -29,6 +29,10 @@ class MyParser(Parser):
     @_('')
     def statement(self, p):
         pass
+
+    @_('QUIT')
+    def statement(self, p):
+        return sys.exit("vous êtes sorti du programme")
 
     @_('POUR variable FLECHE expr ALORS statement')
     def statement(self, p):

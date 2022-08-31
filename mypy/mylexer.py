@@ -1,12 +1,13 @@
 # importer le lexer de SLY
 from sly import Lexer
 
+
 # définir la classe mylexer
 class MyLexer(Lexer):
     # déclarer une liste de TOKENS
     tokens = {NOM, NUM, CHAINE, ECRIS, CONCA,TANTQUE,
               DOUBLE, FLOAT, TYPE, SI, ALORS,
-              SINON, EGL, FONC, POUR, FLECHE, OCCUR, URL,PE,GE,NE}
+              SINON, EGL, FONC, POUR, FLECHE, OCCUR, URL,PE,GE,NE,QUIT}
 
     # litéral ingoré
     ignore = '\t\n '
@@ -44,6 +45,7 @@ class MyLexer(Lexer):
     NOM['type'] = TYPE
     NOM['double'] = DOUBLE
     NOM['tantque'] = TANTQUE
+    NOM['quit']= QUIT
 
 
 
@@ -83,6 +85,7 @@ class MyLexer(Lexer):
     def error(self, t):
         print("caractère non permis '%s'" % str(t.value)[0])
         self.index += 1
+
 
 if __name__ == '__main__':
     lexer = MyLexer()

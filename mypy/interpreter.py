@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-from mypy.execute import *
-from mypy.mylexer import MyLexer
-from mypy.mypy_errors import Error,ParseError
+from .execute import *
+from .mylexer import MyLexer
+from .mypy_errors import Error,ParseError
 
 def main():
     lexer = MyLexer()
@@ -29,5 +29,6 @@ def main():
                 continue
 
 
-    if __name__ == "__main__":
-        main()
+if __name__ == "__main__":
+    main()
+
