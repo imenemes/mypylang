@@ -7,7 +7,7 @@ class MyLexer(Lexer):
     # déclarer une liste de TOKENS
     tokens = {NOM, NUM, CHAINE, ECRIS, CONCA,TANTQUE,
               DOUBLE, FLOAT, TYPE, SI, ALORS,
-              SINON, EGL, FONC, POUR, FLECHE, OCCUR, URL,PE,GE,NE,QUIT}
+              SINON, EGL, FONC, POUR, FLECHE, OCCUR, URL,PE,GE,NE,QUIT, HELP,EX}
 
     # litéral ingoré
     ignore = '\t\n '
@@ -46,6 +46,8 @@ class MyLexer(Lexer):
     NOM['double'] = DOUBLE
     NOM['tantque'] = TANTQUE
     NOM['quit']= QUIT
+    NOM['help'] = HELP
+    NOM['ex'] = EX
 
 
 

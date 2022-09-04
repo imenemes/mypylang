@@ -152,7 +152,6 @@ class Execute:
         if node[0] == 'for_loop_setup':
             return self.traverse(node[1]), self.traverse(node[2])
 
-
         if node[0] == 'occur':
             try:
                 html = requests.get(self.traverse(node[1]))

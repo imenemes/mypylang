@@ -1,0 +1,19 @@
+Bienvenue dans cette page d'aide de l'intepreteur mypyfr .
+Cet intepreteur est capable :
+de traiter:
+    Des opérations arithmétiques :
+        addition, soustration , multiplication , division, puissance, et modulo
+    Des opérations de comparaisons:
+        >,<,>=, <=, ==,!=
+    Des conditions
+    Des boucles for et while
+
+de définir et d'appeler une fonction , une variable
+de reconnaitre trois types d'objets :
+    float , int , str avec la commande type
+dispose des commandes:
+    ecris pour afficher une chaine,
+    conca pour la concaténation de deux chaines  ,
+    double pour doubler une chaine ou un nombre,
+    occur ,  pour chercher le nombre d'occurence d'un mot dans un url donné.
+

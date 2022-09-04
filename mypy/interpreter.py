@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 
-from .execute import *
-from .mylexer import MyLexer
-from .mypy_errors import Error,ParseError
+from mypy.execute import *
+from mypy.mylexer import MyLexer
+
 
 def main():
     lexer = MyLexer()
     parser = MyParser()
     env = {}
+    print('mypyfr 1.0 (default, sept 05 2022)\n' 
+          'Tapez "help" pour plus d\'information sur le langage, "ex" pour des exemples d\'utilisation.')
     while True:
         try:
             text = input('mypy> ')

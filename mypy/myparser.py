@@ -34,6 +34,16 @@ class MyParser(Parser):
     def statement(self, p):
         return sys.exit("vous êtes sorti du programme")
 
+    @_('HELP')
+    def statement(self, p):
+        with open('help.txt') as f:
+            print(f.read())
+
+    @_('EX')
+    def statement(self, p):
+        with open('helpex.txt') as f:
+            print(f.read())
+
     @_('POUR variable FLECHE expr ALORS statement')
     def statement(self, p):
         return 'for_loop', ('for_loop_setup', p.variable, p.expr), p.statement

@@ -1,0 +1,55 @@
+Les commandes de ce langage sont en français , voici quelques exemples d'utilisation :
+
+#Opérations arithmétiques :
+5+4 #addition
+4*2 # multiplication
+8-2 # soustraction
+6/2 #division
+
+#Affiche ou echo:
+ecris "chaine"
+ecris 4.5
+
+#Trouver les occurrence d'un mot dans un site
+occur https://fr.wikipedia.org/wiki/D%C3%A9finition "proposition"
+
+# définition de fonction sans paramètres
+fonc prg(): ecris "test réussi"
+
+# définition de fonction avec un paramètres
+fonc prg2(B): ecris "sss"
+
+# appel à fonction
+prg()
+prg2(B=2)
+
+# déclaration de variable
+a = 2
+
+# appel à variable
+a
+# condition
+si a == 2 alors b= 2*a sinon b= 5
+b
+# type
+type "bjr"
+type a
+
+# boucle for
+pour a=2 -> 5 alors 2*a"
+
+#concaténation de deux chaines
+conca "bon" "jouR"
+
+# erreur division par zéro
+5/0
+
+# erreur si alors
+a=2
+si a < 2 alors b= 2*a "
+
+# doubler un nombre
+double 3
+
+# doubler une chaine
+double "bon"
