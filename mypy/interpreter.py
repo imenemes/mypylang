@@ -9,7 +9,7 @@ def main():
     parser = MyParser()
     env = {}
     print('mypyfr 1.0 (default, sept 05 2022)\n' 
-          'Tapez "help" pour plus d\'information sur le langage, "ex" pour des exemples d\'utilisation.')
+          'Tapez "help" pour plus d\'information sur le langage, "ex" pour des exemples d\'utilisation quit pour quitter.')
     while True:
         try:
             text = input('mypy> ')

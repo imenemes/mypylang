@@ -16,4 +16,5 @@ dispose des commandes:
     conca pour la concaténation de deux chaines  ,
     double pour doubler une chaine ou un nombre,
     occur ,  pour chercher le nombre d'occurence d'un mot dans un url donné.
+    quit pour quitter le programme .
 
